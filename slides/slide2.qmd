@@ -16,15 +16,8 @@ author: Emi Tanaka
 institute: Biological Data Science Institute
 date-talk: "20th September 2024"
 engine: knitr
-filters:
-  - webr
 execute: 
   echo: false
-webr: 
-  show-startup-message: false  
-  packages: 
-    - tidyverse
-    - edibble
 ---
 
 
@@ -441,7 +434,13 @@ Statistical anatomy of the experiment:
 
 ## Replication, Repetition, and Duplication
 
-
+- In an experimental context, treatment
+  - **replication** refers to the (average) number of _independent_ allocation of each treatment to experimental units, 
+  - **repetition** refers to observational units allocated with the same treatment, and
+  - **duplication** refers to repeated measurement of the same unit.
+- Replication increases precision of estimated treatment effects
+- Repetition increases precision of the estimated effects of the corresponding strata
+- Duplication helps to measure the technical variation of the measuing instrument 
 
 ## Systematic designs 
 

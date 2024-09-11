@@ -15,15 +15,8 @@ format:
 author: Emi Tanaka
 institute: Biological Data Science Institute
 date-talk: "17th September 2024"
-filters:
-  - webr
 execute: 
   echo: false
-webr: 
-  show-startup-message: false  
-  packages: 
-    - tidyverse
-    - palmerpenguins
 ---
 
 
