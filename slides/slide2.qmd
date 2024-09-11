@@ -117,7 +117,7 @@ Fisher (1935) The Design of Experiments. _Oliver and Boyd._
 
 ## Comparative experiments
 
-**Aim**: test if a new supplement increases milk yield from Holstein Friesian cows.
+**Aim**: test if a new supplement <img src='/images/supplement1.png' style='height:1em'> increases milk yield from Holstein Friesian cows.
 
 <center>
 
@@ -142,27 +142,37 @@ Fisher (1935) The Design of Experiments. _Oliver and Boyd._
 
 ::: incremental
 
-- **Historical controls** are results of similar experiments from historical or past records. 
+- **Historical controls** are results of similar studies from historical or past records. 
 - Problem with comparing the treatment group and historical control group is that the _groups may differ in important ways besides the treatment_.
 - The **control group** should be in the same experiment as treatment group where ideally the difference between the two groups is only the treatment.
-- A _control_ does not mean necessarily "do nothing" treatment, but can be the current standard practice or a **placebo**.
-- A **placebo** is a treatment designed to have no therapeutic value, but to ensure that the subjects are blind to whether they have taken the new treatment.
-- In some experiments, it is important to to ensure the researchers and/or technicians are also blind to the treatment.
+- A _control_ does not mean necessarily "do nothing" treatment, but can be the current standard practice or a _placebo_.
+
 
 :::
 
+## Blinded experiment
+
+::: incremental
+
+- A **placebo** is a treatment designed to have no therapeutic value, but to ensure that the subjects are blind to which treatment they received.
+- In some experiments, it is important to to ensure the researchers and/or technicians are also blind to the treatment (referred to as *double-blind studies*).
+- In a blinded experiment, certain information are withheld to reduce biases.
+- Blinding is more common in experiments that involve humans (e.g. clinical trials).
+
+
+:::
 
 ## Unreplicated experiments
 
-**Aim**: test if a new supplement increases milk yield from Holstein Friesian cows compared to the control treatment.
+**Aim**: test if a new supplement <img src='/images/supplement1.png' style='height:1em'> increases milk yield from Holstein Friesian cows compared to the control supplement <img src='/images/supplement2.png' style='height:1em'>.
 
 <center>
 
-`r paste(rep(cows1[1], 3), collapse = "")`
+`r paste(rep(cows1[1], 2), collapse = "")`
 
-`r paste(supps, collapse="")`
+`r paste(supps[c(1,3)], collapse="")`
 
-`r milk(5)` `r milk(4)` `r milk(1)`
+`r milk(5)` `r milk(2)`
 
 </center>
 
@@ -174,18 +184,17 @@ Fisher (1935) The Design of Experiments. _Oliver and Boyd._
 
 Statistical anatomy of the experiment:
 
-* **Units**:
-  * **Experimental units**: 2 cows
-  * **Observational units**: 2 cows
+* **Experimental units**: 2 cows
+* **Observational units**: 2 cows
 * **Response**: milk yield
-* **Treatments**: 3 types of supplements
+* **Treatments**: new vs control supplements
 * **Allotment**: supplements <i class="fas fa-arrow-right"></i> cows
 
 :::
 
 ::: {.column width="50%" .incremental}
 
-* **Conclusion**: <img src='/images/supplement1.png' style='height:1em'> produces most <img src='/images/milk.png' style='height:1em'> therefore <img src='/images/supplement1.png' style='height:1em'> is the most effective supplement for higher milk yield from cows out of the three supplements tested
+* **Conclusion**: <img src='/images/supplement1.png' style='height:1em'> produces more <img src='/images/milk.png' style='height:1em'> than <img src='/images/supplement2.png' style='height:1em'> therefore <img src='/images/supplement1.png' style='height:1em'> is an effective supplement for a higher milk yield for Holstein Friesian cows.
 
 * How confident will you be of this conclusion?
 
@@ -197,17 +206,20 @@ Statistical anatomy of the experiment:
 
 ## Natural variation of units
 
-**Aim**: To compare the effectiveness of three supplements on milk yield from cows.
+**Aim**: test if a new supplement <img src='/images/supplement1.png' style='height:1em'> increases milk yield from Holstein Friesian cows compared to the control supplement <img src='/images/supplement2.png' style='height:1em'>.
 
 <center>
-`r paste(c(cows2[1], cows1[c(1, 4)]), collapse = "")`
 
-`r paste(supps, collapse="")`
+`r paste(c(cows2[1], cows1[1]), collapse = "")`
 
-`r milk(5)` `r milk(4)` `r milk(1)`
+`r paste(supps[c(1,3)], collapse="")`
 
+`r milk(5)` `r milk(2)`
+
+</center>
 
 <br>
+
 
 </center>
 
@@ -217,13 +229,12 @@ Statistical anatomy of the experiment:
 
 ## Treatment replications
 
-**Aim**: To compare the effectiveness of three supplements on milk yield from cows.
 
 <center>
 
 `r paste(cows1, collapse = "")`
 
-`r paste(rep(supps, each = 2), collapse="")`
+`r paste(rep(supps[c(1,3)], each = 3), collapse="")`
 
 `r milk(4)` `r milk(6)` `r milk(5)` `r milk(3)` `r milk(1)` `r milk(1)`
 
@@ -238,21 +249,20 @@ Statistical anatomy of the experiment:
 
 ## Confounded factors
 
-**Aim**: To compare the effectiveness of three supplements on milk yield from cows.
 
 ::: columns
 
-::: {.column width="33%"}
+::: {.column width="50%"}
 
 <center>
 
 ::: {.border-box .w-50}
 
-`r paste(cows1[1:2], collapse = "")`  
-`r paste(supps[c(1, 1)], collapse = "")`  
-`r milk(4)` `r milk(5)` 
+`r paste(cows1[1:3], collapse = "")`  
+`r paste(supps[c(1, 1, 1)], collapse = "")`  
+`r milk(4)` `r milk(5)`  `r milk(5)` 
 
- <br>
+ 
 
 :::
 
@@ -260,31 +270,16 @@ Statistical anatomy of the experiment:
 
 :::
 
-::: {.column width="33%"}
+
+::: {.column width="50%"}
 
 <center>
 
 ::: {.border-box .w-50}
 
-`r paste(cows1[3:4], collapse = "")`  
-`r paste(supps[c(2, 2)], collapse = "")`  
- `r milk(10)` `r milk(8)` 
-
-:::
- 
- </center>
-
-:::
-
-::: {.column width="33%"}
-
-<center>
-
-::: {.border-box .w-50}
-
-`r paste(cows1[5:6], collapse = "")`  
-`r paste(supps[c(3, 3)], collapse = "")`  
- `r milk(3)` `r milk(4)` 
+`r paste(cows1[4:6], collapse = "")`  
+`r paste(supps[c(3, 3, 3)], collapse = "")`  
+ `r milk(3)` `r milk(4)` `r milk(4)` 
 
 :::
  
@@ -309,19 +304,17 @@ Statistical anatomy of the experiment:
 
 ## Complete block designs 
 
-**Aim**: To compare the effectiveness of three supplements on milk yield from cows.
-
 ::: columns
 
-::: {.column width="50%"}
+::: {.column width="33%"}
 
 <center>
 
 ::: {.border-box .w-50}
 
-`r paste(cows1[1:3], collapse = "")`  
-`r paste(supps, collapse = "")`  
-`r milk(4)` `r milk(5)`  `r milk(1)`
+`r paste(cows1[1:2], collapse = "")`  
+`r paste(supps[c(1, 3)], collapse = "")`  
+`r milk(4)`  `r milk(1)`
 
  <br>
 
@@ -331,15 +324,31 @@ Statistical anatomy of the experiment:
 
 :::
 
-::: {.column width="50%"}
+::: {.column width="33%"}
 
 <center>
 
 ::: {.border-box .w-50}
 
-`r paste(cows1[4:6], collapse = "")`  
-`r paste(supps, collapse = "")`  
- `r milk(10)` `r milk(8)` `r milk(5)`
+`r paste(cows1[3:4], collapse = "")`  
+`r paste(supps[c(1, 3)], collapse = "")`  
+ `r milk(10)` `r milk(3)` 
+
+:::
+ 
+ </center>
+
+:::
+
+::: {.column width="33%"}
+
+<center>
+
+::: {.border-box .w-50}
+
+`r paste(cows1[5:6], collapse = "")`  
+`r paste(supps[c(1, 3)], collapse = "")`  
+ `r milk(10)` `r milk(5)` 
 
 :::
  
@@ -377,8 +386,6 @@ Statistical anatomy of the experiment:
 `r paste(supps[1], collapse = "")`  
 `r milk(4)` `r milk(5)` 
 
- <br>
-
 :::
 
 </center>
@@ -392,12 +399,12 @@ Statistical anatomy of the experiment:
 ::: {.border-box .w-50}
 
 `r paste(cows1[3:4], collapse = "")`  
-`r paste(supps[2], collapse = "")`  
- `r milk(10)` `r milk(8)` 
+`r paste(supps[1], collapse = "")`  
+`r milk(4)` `r milk(5)` 
 
 :::
- 
- </center>
+
+</center>
 
 :::
 
@@ -425,7 +432,7 @@ Statistical anatomy of the experiment:
 
 * **Allotment**: supplements <i class="fas fa-arrow-right"></i> pens
 * **Experimental units**: pens (not cows!), **Observational units**: cows
-* There is only one replication of each treatment (not two!)
+* There is an average of 1.5 replication (not three!)
 
 * We refer analysis that treat _repetition_ as replication as **pseudo-replication**.
 
@@ -442,7 +449,7 @@ Statistical anatomy of the experiment:
 
 `r paste(c(cows1), collapse = "")`
 
-`r paste(rep(supps, each = 2), collapse="")`
+`r paste(rep(supps[c(1,3)], each = 3), collapse="")`
 
 </center>
 
@@ -462,7 +469,7 @@ Statistical anatomy of the experiment:
 
 `r paste(c(cows1), collapse = "")`
 
-`r set.seed(2);paste(sample(rep(supps, each = 2)), collapse="")`
+`r set.seed(2);paste(sample(rep(supps[c(1,3)], each = 3)), collapse="")`
 
 </center>
 
@@ -474,10 +481,9 @@ Statistical anatomy of the experiment:
 - Randomisation doesn't mean it'll completely shield you from all biases.
 - Randomisation is like buying an insurance (but free!). 
 - You can get a systematic order by chance! <i class="fas fa-exclamation-circle"></i> This doesn't mean you should keep on randomising your design until get the layout you want! You should instead consider blocking your units before randomisation.
+- Block what you can, randomise what you cannot.
 
 :::
-
-
 
 
 ## How to randomise?
@@ -485,17 +491,6 @@ Statistical anatomy of the experiment:
 - Preferably use a computer to randomise treatments to units. 
 
 
-
-## Blocking
-
-- Block what you can, randomise what you cannot.
-
-## <i class='fas fa-book'></i> Principles of experimental design
-
-- Controls 
-- Replication 
-- Blocking 
-- Randomisation 
 
 ## Design anatomy
 
@@ -530,10 +525,14 @@ summary(lm(Weight ~ Treatment + Glasshouse, data = df10v4)) |>
 
 ## Summary
 
+::: incremental
 
 - Remember the basic design principles: controls, replication, blocking, and randomisaton. 
+- Use blinding where applicable to reduce experimental bias.
 - Randomisation is like buying an insurance (but free!).
 - Randomisation helps to protect you from unknown confounding factors. 
 - Block what you can, randomise what you cannot.
 - Watch out for pseudoreplication!
 - Randomise using a computer program if possible.
+
+:::
