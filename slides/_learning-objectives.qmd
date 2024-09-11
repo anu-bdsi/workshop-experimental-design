@@ -1,0 +1,5 @@
+- Comprehend the differences between experimental and observational data 
+- Demonstrate proficiency in designing experiments, including defining research questions, selecting appropriate treatments or factors, and identifying potential sources of variation
+- Understand the principles of experimental design, including randomization, control, replication, and blocking
+- Understand the fundamental concepts of causal inference for experimental data
+- Formulate a statistical analysis plan for the given experimental design

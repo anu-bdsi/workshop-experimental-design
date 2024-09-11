@@ -1,0 +1,58 @@
+---
+title: Analysis of experimental data
+subtitle: "{{< var workshop-title >}}"
+format:
+  anu-light-revealjs:
+    width: 1920
+    height: 1080
+    auto-stretch: false
+    html-math-method: katex
+    self-contained: false
+    css: 
+     - /assets/slides.css
+    footer: "{{< var workshop-url >}}"
+author: Emi Tanaka
+institute: Biological Data Science Institute
+date-talk: "20th September 2024"
+filters:
+  - webr
+execute: 
+  echo: true
+webr: 
+  show-startup-message: false  
+  packages: 
+    - tidyverse
+    - agridat
+---
+
+
+## {{< fa crosshairs >}} Current learning objective
+
+```{r, include = FALSE}
+library(tidyverse)
+source("setup.R")
+```
+
+
+```{r}
+#| results: asis 
+#| echo: false
+learning_objectives(4:5)
+```
+
+## Analysis of variance (ANOVA)
+
+
+## Linear models 
+
+- ANOVA is a special case of linear models
+
+## Common diagnostics 
+
+- Check the residual plot 
+- Outliers 
+- Transformation of data
+- Multiple comparisons 
+
+## Summary 
+

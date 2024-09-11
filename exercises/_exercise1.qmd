@@ -1,0 +1,148 @@
+---
+format: 
+  html:
+    self-contained: true
+    css: 
+      - ../assets/webex.css
+    include-after-body: 
+      - ../assets/webex.js
+---
+
+```{r}
+#| include: false
+library(webexercises)
+```
+
+For the following studies, 
+
+a) identify the aim of the study,
+a) classify each as an experimental study or an observational study,
+a) identify the treatments or exposures being studied,
+a) identify the experimental units or subjects being observed,  
+a) identify the response variable(s) being measured, 
+a) identify the observational units being studied,
+a) draw a causal diagram.
+
+For (a)-(f), you will need to either select one or more options from a list or fill in the blank. Some questions will have multiple correct answers. For (g), a sample diagram is provided but by no means is it the only correct answer. 
+
+For each study, think about whether the study objective can be better framed and whether the treatments/exposures and response variables indeed address the objective.
+
+#### Study 1
+
+Researchers are studying the effect of a new fertilizer on plant growth. They randomly select 50 plants from the same species and divide them into two groups. One group receives the new fertilizer, while the other group receives a standard fertilizer. Over the course of two months, the researchers measure the height and number of leaves of the plants in both groups to assess the impact of the new fertilizer.
+
+::: {.webex-check .webex-box}
+
+a) Select the sentence that best describes the aim of the study. `r longmcq(c(answer = "Researchers are studying the effect of a new fertilizer on plant growth.", "They randomly select 50 plants from the same species and divide them into two groups.", "One group receives the new fertilizer, while the other group receives a standard fertilizer.", "Over the course of two months, the researchers measure the height and number of leaves of the plants in both groups to assess the impact of the new fertilizer."))`
+a) What type of study is this? `r longmcq(c(answer = "Experimental study", "Observational study"))`
+b) What are the treatments or exposures in this study? `r mcq(sample(c(answer = "Fertilizer type", "Plants", "Leaves", "Plant species", "Plant height", "Number of leaves of plant")))`
+c) What are the experimental units or subjects in this study? `r mcq(sample(c("Fertilizer type", answer = "Plants", "Leaves", "Plant species", "Plant height", "Number of leaves of plant")))`
+d) What are the response variables in this study? `r mcq(sample(c("Fertilizer type", "Plants", "Leaves", "Plant species", answer = "Plant height", answer = "Number of leaves of plant")))`
+e) What are the observational units in this study? `r fitb("plants?", ignore_case = TRUE, regex = TRUE)`
+g) Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.
+
+<details style='padding-left: 10%;'><summary>Sample diagram</summary>
+
+```{mermaid}
+flowchart LR
+    P0[Plant source] --> P1[50 Plants]
+    subgraph Treatments
+      direction TB
+      F[New fertilizer] 
+      S[Standard fertilizer] 
+    end 
+    Treatments --> P1
+    subgraph Responses
+    H[Plant height]
+    L[Number of leaves]
+    end
+    P1 --> H
+    P1 --> L
+    Environment[Environment, e.g. sunlight, water, CO2 etc] --> P1
+    M[Measurement device] --> H
+    Person[Person] --> M
+    style Treatments fill:#fff,stroke:#333,stroke-width:4px
+    style Responses fill:#fff,stroke:#333,stroke-width:4px
+```
+
+</details>
+
+
+:::
+
+#### Study 2 
+
+A group of ecologists wants to study the relationship between sunlight exposure and tree growth in a forest. They observe and measure the height of 100 trees growing in different areas of the forest, noting how much sunlight each tree receives naturally based on its location. They collect data on tree growth and sunlight exposure to analyze any correlations between the two variables.
+
+::: {.webex-check .webex-box}
+
+a) Select the sentence that best describes the aim of the study. `r longmcq(c(answer = "A group of ecologists wants to study the relationship between sunlight exposure and tree growth in a forest.", "They observe and measure the height of 100 trees growing in different areas of the forest.", "Noting how much sunlight each tree receives naturally based on its location.", "They collect data on tree growth and sunlight exposure to analyze any correlations between the two variables."))`
+a) What type of study is this? `r longmcq(c("Experimental study", answer = "Observational study"))`
+b) What are the treatments or exposures in this study? `r mcq(sample(c(answer = "Sunlight exposure", "Area", "Trees", "Tree height")))`
+c) What are the experimental units or subjects in this study? `r mcq(sample(c("Sunlight exposure", "Area", answer = "Trees", "Tree height")))`
+d) What are the response variables in this study? `r mcq(sample(c("Sunlight exposure", "Area", "Trees", answer = "Tree height")))`
+e) What are the observational units in this study? `r fitb("trees?", ignore_case = TRUE, regex = TRUE)`
+g) Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.
+
+<details style='padding-left: 10%;'><summary>Sample diagram</summary>
+
+</details>
+:::
+
+#### Study 3
+
+A group of epidemiologists is investigating the potential link between physical activity levels and heart disease. They collect data from 1,000 adults by surveying them about their weekly exercise habits and then tracking their health outcomes over the next 10 years. They record the participants physical activity levels and whether or not individuals develop heart disease.
+
+::: {.webex-check .webex-box}
+
+a) Select the sentence that best describes the aim of the study. `r longmcq(c(answer = "A group of epidemiologists is investigating the potential link between physical activity levels and heart disease.", "They collect data from 1,000 adults by surveying them about their weekly exercise habits and then tracking their health outcomes over the next 10 years.", "They record the participants physical activity levels and whether or not individuals develop heart disease."))`
+a) What type of study is this? `r longmcq(c("Experimental study", answer = "Observational study"))`
+b) What are the treatments or exposures in this study? `r mcq(sample(c(answer = "Physical activity levels", "Heart disease", "Adults", "Epidemiologists")))`
+c) What are the experimental units or subjects in this study? `r mcq(sample(c("Physical activity levels", "Heart disease", answer = "Adults", "Epidemiologists")))`
+d) What are the response variables in this study? `r mcq(sample(c("Physical activity levels", answer = "Heart disease",  "Adults", "Epidemiologists")))`
+e) What are the observational units in this study? `r fitb("adults?", ignore_case = TRUE, regex = TRUE)`
+g) Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.
+
+<details style='padding-left: 10%;'><summary>Sample diagram</summary>
+
+</details>
+:::
+
+#### Study 4
+
+A medical researcher is testing the effectiveness of a new drug for treating high blood pressure. They recruit 200 patients with hypertension and randomly assign half to receive the new drug, while the other half receive a placebo. After three months, the researchers measure the blood pressure of all participants to determine whether the new drug significantly lowers blood pressure compared to the placebo.
+
+::: {.webex-check .webex-box}
+
+a) Select the sentence that best describes the aim of the study. `r longmcq(c(answer = "A medical researcher is testing the effectiveness of a new drug for treating high blood pressure.", "They recruit 200 patients with hypertension and randomly assign half to receive the new drug, while the other half receive a placebo.", "After three months, the researchers measure the blood pressure of all participants to determine whether the new drug significantly lowers blood pressure compared to the placebo."))`
+a) What type of study is this? `r longmcq(c(answer = "Experimental study", "Observational study"))`
+b) What are the treatments or exposures in this study? `r mcq(sample(c(answer = "Drug", "Patients", answer = "Placebo", "Blood pressure", "Medical researcher")))`
+c) What are the experimental units or subjects in this study? `r mcq(sample(c("Drug", answer = "Patients", "Placebo", "Blood pressure", "Medical researcher")))`
+d) What are the response variables in this study? `r mcq(sample(c("Drug", "Patients", "Placebo", answer = "Blood pressure", "Medical researcher")))`
+e) What are the observational units in this study? `r fitb("patients?", ignore_case = TRUE, regex = TRUE)`
+g) Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.
+
+<details style='padding-left: 10%;'><summary>Sample diagram</summary>
+
+</details>
+:::
+
+#### Study 5
+
+A biologist is studying the effect of different water temperatures on fish growth. They select 100 fish and randomly assign them to two tanks: one with water kept at 15°C and the other at 25°C. Over the course of a month, the researcher measures the weight gain of each fish in both tanks to assess how water temperature affects growth.
+
+
+::: {.webex-check .webex-box}
+
+a) Select the sentence that best describes the aim of the study. `r longmcq(c("A biologist is studying the effect of different water temperatures on fish growth.", answer = "They select 100 fish and randomly assign them to two tanks: one with water kept at 15°C and the other at 25°C.", "Over the course of a month, the researcher measures the weight gain of each fish in both tanks to assess how water temperature affects growth."))`
+a) What type of study is this? `r longmcq(c(answer = "Experimental study", "Observational study"))`
+b) What are the treatments or exposures in this study? `r mcq(sample(c("Biologist", "Fish", answer = "Water temperature", "Tanks", "Weight gain")))`
+c) What are the experimental units or subjects in this study? `r mcq(sample(c("Biologist", "Fish",  "Water temperature", answer = "Tanks", "Weight gain")))`
+d) What are the response variables in this study? `r mcq(sample(c("Biologist", "Fish",  "Water temperature", "Tanks", answer = "Weight gain")))`
+e) What are the observational units in this study? `r fitb("fishe?s?", ignore_case = TRUE, regex = TRUE)`
+g) Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.
+
+<details style='padding-left: 10%;'><summary>Sample diagram</summary>
+
+</details>
+:::

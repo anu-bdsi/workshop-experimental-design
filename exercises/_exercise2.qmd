@@ -1,0 +1,38 @@
+---
+format: 
+  html:
+    self-contained: true
+    css: 
+      - ../assets/webex.css
+    include-after-body: 
+      - ../assets/webex.js
+filters:
+  - webr2
+webr: 
+  show-startup-message: false  
+  packages: 
+    - edibble
+---
+
+```{r}
+#| include: false
+library(webexercises)
+```
+
+#### Study A
+
+Researchers are studying the effect of a new fertilizer on plant growth. They randomly select 50 plants from the same species and divide them into two groups. One group receives the new fertilizer, while the other group receives a standard fertilizer. Over the course of two months, the researchers measure the height and number of leaves of the plants in both groups to assess the impact of the new fertilizer.
+
+```{webr-r}
+library(edibble)
+des1 <- design("Study A") |> 
+  set_units(plant = 50) |> 
+  set_trts(fertilizer = c("new", "standard")) |>
+  set_rcrds(height = plant, 
+            number_of_leaves = plant) |> 
+  allot_table(fertilizer ~ plant)
+
+design_anatomy(des1)
+```
+
+### Study B

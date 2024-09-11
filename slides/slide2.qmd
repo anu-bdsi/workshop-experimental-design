@@ -1,0 +1,539 @@
+---
+title: Principles of experimental designs
+subtitle: "{{< var workshop-title >}}"
+format:
+  anu-light-revealjs:
+    width: 1920
+    height: 1080
+    auto-stretch: false
+    html-math-method: katex
+    self-contained: false
+    css: 
+     - /assets/slides.css
+     - /assets/table.css
+    footer: "{{< var workshop-url >}}"
+author: Emi Tanaka
+institute: Biological Data Science Institute
+date-talk: "20th September 2024"
+engine: knitr
+filters:
+  - webr
+execute: 
+  echo: false
+webr: 
+  show-startup-message: false  
+  packages: 
+    - tidyverse
+    - edibble
+---
+
+
+
+
+## {{< fa crosshairs >}} Current learning objective
+
+```{r}
+#| include: false
+library(tidyverse)
+source("setup.R")
+asciicast::init_knitr_engine(
+  startup = quote({
+    library(edibble)
+    options(tibble.width = Inf,
+            tibble.print_max = Inf)
+  }),
+  echo = FALSE,
+  echo_input = FALSE
+)
+
+cows1 <- sprintf("<img src='/images/cow%d.png' width='120px' style='margin-right:20px;'>", 1:6)
+cows2 <- sprintf("<img src='/images/cow%d.png' width='120px' style='margin-right:20px;'>", 7:12)
+supps <- sprintf("<span style='width:120px;display:inline-block;margin-right:20px;'><img src='/images/supplement%d.png' width='40px'></span>", c(1, 3, 2))
+amilk <- "<img class='w-20' src='/images/milk.png'/>"
+milk <- function(n = 1) {
+  glue::glue("<span class='flex' style='display:inline-block;width:120px;margin-right:20px;'>{paste0(rep(amilk, n), collapse = '')}</span>")
+}
+
+set.seed(1)
+wheat <- sample(sprintf("<img src='/images/grain%d.png' width='80px' style='margin-right:20px;'>", 1:12))
+water <- sprintf("<span style='width:50px;display:inline-block;margin-right:0px;'><img src='/images/water%d.png' width='40px'></span>", 1:2)
+brand <- sprintf("<span style='width:50px;display:inline-block;margin-right:0px;'><img src='/images/brand%d.png' width='40px'></span>", 1:2)
+trts <- paste0(sample(rep(water, 6)), sample(rep(brand, 6)))
+comb <- expand.grid(water, brand) %>% 
+  mutate(trts = paste0(Var1, Var2)) %>% 
+  pull(trts)
+trts2 <- sample(rep(comb, 3))
+set.seed(2)
+trts3 <- paste0(rep(sample(rep(water, 3)), each = 2),
+                as.vector(replicate(6, sample(brand))))
+
+invthm <- theme_classic(base_size = 28) +
+  theme(
+    panel.background  = element_rect(fill = 'transparent', colour = NA),
+    plot.background   = element_rect(fill = 'transparent', colour = NA),
+    legend.background = element_rect(fill = 'transparent', colour = NA),
+    legend.key        = element_rect(fill = 'transparent', colour = NA),
+    axis.title        = element_text(size = 18),
+    axis.text         = element_text(size = 16),
+    strip.text        = element_text(size = 20),
+    axis.line.y.right = element_blank()
+  )
+theme_set(invthm)
+
+```
+
+```{css}
+.border-box {
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+}
+```
+
+```{r}
+#| results: asis 
+#| echo: false
+learning_objectives(3)
+```
+
+
+## <i class='fas fa-paint-brush'></i> Designing experiments
+
+
+- Designing a comparative experiment in the biological sciences is to identify a data-collection scheme that:
+  - achieve sensitivity and specificity requirements 
+  - despite biological and technical variability, 
+  - while keeping time and resource costs low.
+
+
+
+
+
+::: aside
+
+Fisher (1935) The Design of Experiments. _Oliver and Boyd._
+
+:::
+
+## Comparative experiments
+
+**Aim**: test if a new supplement increases milk yield from Holstein Friesian cows.
+
+<center>
+
+`r paste(rep(cows1[1], 1), collapse = "")`
+
+`r paste(supps[1], collapse="")`
+
+`r milk(5)`
+</center>
+
+::: incremental
+
+- Is the new supplement effective?
+- Most experiments are comparative in nature.
+- Historical data suggests that Holstein Friesian cows have an average milk yield of `r milk(4)`
+- Is the new supplement better?
+- Are historical data comparable to new experimental data?
+
+:::
+
+## Controls
+
+::: incremental
+
+- **Historical controls** are results of similar experiments from historical or past records. 
+- Problem with comparing the treatment group and historical control group is that the _groups may differ in important ways besides the treatment_.
+- The **control group** should be in the same experiment as treatment group where ideally the difference between the two groups is only the treatment.
+- A _control_ does not mean necessarily "do nothing" treatment, but can be the current standard practice or a **placebo**.
+- A **placebo** is a treatment designed to have no therapeutic value, but to ensure that the subjects are blind to whether they have taken the new treatment.
+- In some experiments, it is important to to ensure the researchers and/or technicians are also blind to the treatment.
+
+:::
+
+
+## Unreplicated experiments
+
+**Aim**: test if a new supplement increases milk yield from Holstein Friesian cows compared to the control treatment.
+
+<center>
+
+`r paste(rep(cows1[1], 3), collapse = "")`
+
+`r paste(supps, collapse="")`
+
+`r milk(5)` `r milk(4)` `r milk(1)`
+
+</center>
+
+<br>
+
+::: columns
+
+::: {.column width="50%"}
+
+Statistical anatomy of the experiment:
+
+* **Units**:
+  * **Experimental units**: 2 cows
+  * **Observational units**: 2 cows
+* **Response**: milk yield
+* **Treatments**: 3 types of supplements
+* **Allotment**: supplements <i class="fas fa-arrow-right"></i> cows
+
+:::
+
+::: {.column width="50%" .incremental}
+
+* **Conclusion**: <img src='/images/supplement1.png' style='height:1em'> produces most <img src='/images/milk.png' style='height:1em'> therefore <img src='/images/supplement1.png' style='height:1em'> is the most effective supplement for higher milk yield from cows out of the three supplements tested
+
+* How confident will you be of this conclusion?
+
+
+:::
+
+:::
+
+
+## Natural variation of units
+
+**Aim**: To compare the effectiveness of three supplements on milk yield from cows.
+
+<center>
+`r paste(c(cows2[1], cows1[c(1, 4)]), collapse = "")`
+
+`r paste(supps, collapse="")`
+
+`r milk(5)` `r milk(4)` `r milk(1)`
+
+
+<br>
+
+</center>
+
+- Ensure uniform material are used for experimental units as much as you can, but
+- <i class="fas fa-exclamation-circle"></i> no individual experimental units are the same (with some exceptions).
+- There will be a natural variation of the experimental units. 
+
+## Treatment replications
+
+**Aim**: To compare the effectiveness of three supplements on milk yield from cows.
+
+<center>
+
+`r paste(cows1, collapse = "")`
+
+`r paste(rep(supps, each = 2), collapse="")`
+
+`r milk(4)` `r milk(6)` `r milk(5)` `r milk(3)` `r milk(1)` `r milk(1)`
+
+</center>
+
+<br>
+
+- Treatment replications increases precision and quantify uncertainty.
+- Ideally we want higher replications but resources limit this.
+
+
+
+## Confounded factors
+
+**Aim**: To compare the effectiveness of three supplements on milk yield from cows.
+
+::: columns
+
+::: {.column width="33%"}
+
+<center>
+
+::: {.border-box .w-50}
+
+`r paste(cows1[1:2], collapse = "")`  
+`r paste(supps[c(1, 1)], collapse = "")`  
+`r milk(4)` `r milk(5)` 
+
+ <br>
+
+:::
+
+</center>
+
+:::
+
+::: {.column width="33%"}
+
+<center>
+
+::: {.border-box .w-50}
+
+`r paste(cows1[3:4], collapse = "")`  
+`r paste(supps[c(2, 2)], collapse = "")`  
+ `r milk(10)` `r milk(8)` 
+
+:::
+ 
+ </center>
+
+:::
+
+::: {.column width="33%"}
+
+<center>
+
+::: {.border-box .w-50}
+
+`r paste(cows1[5:6], collapse = "")`  
+`r paste(supps[c(3, 3)], collapse = "")`  
+ `r milk(3)` `r milk(4)` 
+
+:::
+ 
+ </center>
+
+:::
+
+:::
+
+<br>
+
+::: incremental
+
+- **Units**: 2 pens with 3 cows each
+-  Are the treatment means comparable?
+- In this case, the pen is **completely confounded** (or aliased) with the supplement.
+- <i class="fas fa-skull-crossbones"></i> We do not get any valid inference about the treatment effects! 
+- How would you distribute the treatments?
+
+:::
+
+
+## Complete block designs 
+
+**Aim**: To compare the effectiveness of three supplements on milk yield from cows.
+
+::: columns
+
+::: {.column width="50%"}
+
+<center>
+
+::: {.border-box .w-50}
+
+`r paste(cows1[1:3], collapse = "")`  
+`r paste(supps, collapse = "")`  
+`r milk(4)` `r milk(5)`  `r milk(1)`
+
+ <br>
+
+:::
+
+</center>
+
+:::
+
+::: {.column width="50%"}
+
+<center>
+
+::: {.border-box .w-50}
+
+`r paste(cows1[4:6], collapse = "")`  
+`r paste(supps, collapse = "")`  
+ `r milk(10)` `r milk(8)` `r milk(5)`
+
+:::
+ 
+ </center>
+
+:::
+
+:::
+
+<br>
+
+::: incremental
+
+* Every treatment appears once in each pen (referred to as *complete block designs*)
+* Each treatment appears in every pen so you can be more confident that the treatment means are not due to the conditions of particular pens
+- Comparing _like-with-like_ increases precision.
+- Cows in the same pen share a more similar environment than cows in another pen.
+- Different treatments to alike experimental units gives more precision in treatment comparison.
+
+:::
+
+## Pseudo-replication 
+
+**Aim**: To compare the effectiveness of three supplements on milk yield from cows.
+
+::: columns
+
+::: {.column width="33%"}
+
+<center>
+
+::: {.border-box .w-50}
+
+`r paste(cows1[1:2], collapse = "")`  
+`r paste(supps[1], collapse = "")`  
+`r milk(4)` `r milk(5)` 
+
+ <br>
+
+:::
+
+</center>
+
+:::
+
+::: {.column width="33%"}
+
+<center>
+
+::: {.border-box .w-50}
+
+`r paste(cows1[3:4], collapse = "")`  
+`r paste(supps[2], collapse = "")`  
+ `r milk(10)` `r milk(8)` 
+
+:::
+ 
+ </center>
+
+:::
+
+::: {.column width="33%"}
+
+<center>
+
+::: {.border-box .w-50}
+
+`r paste(cows1[5:6], collapse = "")`  
+`r paste(supps[3], collapse = "")`  
+ `r milk(3)` `r milk(4)` 
+
+:::
+ 
+ </center>
+
+:::
+
+:::
+
+<br>
+
+::: incremental
+
+* **Allotment**: supplements <i class="fas fa-arrow-right"></i> pens
+* **Experimental units**: pens (not cows!), **Observational units**: cows
+* There is only one replication of each treatment (not two!)
+
+* We refer analysis that treat _repetition_ as replication as **pseudo-replication**.
+
+:::
+
+
+## Replication, Repetition, and Duplication
+
+
+
+## Systematic designs 
+
+<center>
+
+`r paste(c(cows1), collapse = "")`
+
+`r paste(rep(supps, each = 2), collapse="")`
+
+</center>
+
+::: incremental
+
+- The supplement treatment is given in a systematic order. 
+- What could go wrong with this?
+- The order of the experimental units may be **_confounded_** with some extraneous factor
+- Like say, the order of the experimental units was determined by the speed (fast to slow) of the cow to get to the feed
+- This means that the more active cows are given <img src='/images/supplement1.png' style='height:1em'> and leasat active ones are given <img src='/images/supplement2.png' style='height:1em'> 
+
+:::
+
+## Randomisation 
+
+<center>
+
+`r paste(c(cows1), collapse = "")`
+
+`r set.seed(2);paste(sample(rep(supps, each = 2)), collapse="")`
+
+</center>
+
+::: incremental
+
+- Randomisation protects you against bias and potential unwanted confounding with extraneous factors
+- Bias comes in many forms: obvious to not-so obvious,  known to unknown, and so on.
+
+- Randomisation doesn't mean it'll completely shield you from all biases.
+- Randomisation is like buying an insurance (but free!). 
+- You can get a systematic order by chance! <i class="fas fa-exclamation-circle"></i> This doesn't mean you should keep on randomising your design until get the layout you want! You should instead consider blocking your units before randomisation.
+
+:::
+
+
+
+
+## How to randomise?
+
+- Preferably use a computer to randomise treatments to units. 
+
+
+
+## Blocking
+
+- Block what you can, randomise what you cannot.
+
+## <i class='fas fa-book'></i> Principles of experimental design
+
+- Controls 
+- Replication 
+- Blocking 
+- Randomisation 
+
+## Design anatomy
+
+## Simulate the experiment
+
+
+## Statistical analysis plan
+
+::: f2
+
+**Analysis of variance**
+
+```{r}
+#| eval: false
+options(knitr.kable.NA = '')
+anova(lm(Weight ~ Treatment + Glasshouse, data = df10v4)) |> 
+  knitr::kable(digits = 3)
+```
+
+**Estimated regression parameters**
+
+```{r}
+#| eval: false
+summary(lm(Weight ~ Treatment + Glasshouse, data = df10v4)) |> 
+  broom::tidy() |> 
+  mutate(Term = c("Intercept", "Treatment", "Glasshouse")) |> 
+  select(Term, Estimate = estimate, `Std Error` = std.error, `P value` = p.value) |> 
+  knitr::kable(digits = 3)
+```
+
+:::
+
+## Summary
+
+
+- Remember the basic design principles: controls, replication, blocking, and randomisaton. 
+- Randomisation is like buying an insurance (but free!).
+- Randomisation helps to protect you from unknown confounding factors. 
+- Block what you can, randomise what you cannot.
+- Watch out for pseudoreplication!
+- Randomise using a computer program if possible.

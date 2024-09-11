@@ -1,0 +1,163 @@
+---
+title: "Design and Analysis of Experiments"
+date: 2024/09/17
+categories: BDSI Workshop
+engine: knitr
+filters:
+  - webr2
+webr: 
+  show-startup-message: false    
+  packages:
+    - palmerpenguins
+    - tidyverse
+    - agridat
+    - medicaldata
+    - edibble
+---
+
+
+## 👋 Welcome 
+
+This is a training workshop for BIOL8001 students but extended to also 
+staff and students affiliated with the Australian National University (ANU) offered by the ANU Biological Data Science Institute (BDSI). 
+
+This workshop provides a comprehensive introduction to the principles of experimental design and the analysis of experimental data. Participants are expected to have a basic understanding of R and linear models prior to the start of the workshop. 
+
+
+## 🎯 Learning objectives 
+
+Upon completion of this workshop, participants should be able to:
+
+{{< include slides/_learning-objectives.qmd >}}
+
+
+## 🔧 Preperation 
+
+Please ensure that you download and install 
+
+- the latest version of [R](https://cran.csiro.au/),
+- the latest version of [RStudio Desktop](https://posit.co/download/rstudio-desktop/) or [Positron](https://github.com/posit-dev/positron/releases), and 
+- the following packages by opening RStudio Desktop or Positron, then copy and paste the command below in the Console section, pushing Enter after pasting.
+
+```r
+install.packages(c("edibble", "agridat", "tidyverse"))
+```
+
+- For Window users, you may need to [install Rtools](https://cran.r-project.org/bin/windows/Rtools/) to install R packages.
+
+
+
+## Materials 
+
+
+```{r setup, include = FALSE}
+library(webexercises)
+library(lubridate)
+library(tidyverse)
+library(agridat)
+library(medicaldata)
+ex_tabset <- function(id) {
+  paste0("[<i class='fas fa-pen-square'></i> Self test with Exercise ", id, "](#tabset-1-", id, "-tab){onclick=",
+         'document.getElementById(', "'tabset-1-", id, "-tab').click();",
+         '}')
+}
+slide_title <- function(id) {
+  paste0("[", 
+         rmarkdown::yaml_front_matter(paste0("slides/slide", id, ".qmd"))$title,
+         "](slides/slide", id, ".html){target='_blank'}")
+}
+
+LOs <- readLines("slides/_learning-objectives.qmd")
+LOs <- LOs[LOs!=""]
+LOs <- stringr::str_replace(LOs, "- ", "")
+
+checklist <- function(x) {
+  paste0("::: {.callout-note}\n\n", 
+         "## Reflect on learning objectives \n\n",
+         "You should be able to:\n",
+         paste0("<ul class='checkbox'>", paste(paste0("<li><input type='checkbox'> ", x, "</li>"), collapse = "\n\n"), "</ul>\n\n:::"))
+
+}
+
+```
+
+[![](images/by-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)
+
+
+## 🕙 Slides
+
+Click on the heading to open the slides in a new tab, or click on details to see the slides on this page.
+
+###  `r slide_title(1)`
+
+<details>
+
+<iframe class="slide-deck" src="slides/slide1.html"></iframe>
+
+`r ex_tabset(1)`
+
+</details>
+
+###  `r slide_title(2)`
+
+<details>
+
+<iframe class="slide-deck" src="slides/slide2.html"></iframe>
+
+`r ex_tabset(2)`
+
+</details>
+
+### `r slide_title(3)`
+
+<details>
+   
+<iframe class="slide-deck" src="slides/slide3.html"></iframe>
+
+`r ex_tabset(3)`
+
+</details>
+
+## 📑 Resources
+
+- Ruxton & Colegrave (2006) Experimental design for the life sciences. 2nd Edition. _(This book has a number of practical advices.)_
+- Glass (2007) Experimental design for biologists. 1st Edition. _(This book is more philosophical.)_
+- Chapters 1, 3, 4 and 7 from Welham et al. (2015) Statistical Methods in Biology: Design and Analysis of Experiments and Regression. See <http://www.stats4biol.info/> for the data and code in the book. _(This book is more statistical.)_
+
+## 🏋️‍♀️ Self-paced exercises
+
+The following self-paced exercises are designed to check your understanding of the material. After completing each exercise, review your answers and assess your grasp of the concepts.
+
+
+::: {.panel-tabset}
+
+## Exercise 1
+
+`r checklist(LOs[1:2])`
+
+
+{{< include "exercises/_exercise1.qmd" >}}
+
+
+
+## Exercise 2
+
+`r checklist(LOs[3:4])`
+
+
+{{< include "exercises/_exercise2.qmd" >}}
+
+
+
+## Exercise 3
+
+`r checklist(LOs[5])`
+
+
+{{< include "exercises/_exercise3.qmd" >}}
+
+
+
+
+
+:::

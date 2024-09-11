@@ -1,0 +1,27 @@
+project:
+  type: website
+website:
+  title: "ANU BDSI"
+  navbar:
+    title: "{{< var workshop-title >}}"
+    left:
+      - href: index.qmd
+        text: " "
+  body-footer: | 
+    [This website is brought to you by the [ANU Biological Data Science Institute](https://bdsi.anu.edu.au/).]{.footer}
+  margin-header: |
+    ![](/images/ANU_Secondary_Horizontal_GoldBlack.png)
+format:
+  html:
+    toc: true
+    css: 
+      - assets/webex.css
+      - assets/custom.css
+      - assets/exercises.css
+      - styles.css
+    include-after-body: 
+      - assets/webex.js
+    
+
+
+

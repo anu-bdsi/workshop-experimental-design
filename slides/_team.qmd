@@ -1,0 +1,27 @@
+
+
+::: {.panel-tabset .f1}
+
+## ![Dr. Emi Tanaka](/images/team/emi-square.png){.circle-image-120}<br>Dr. Emi Tanaka
+
+::: f2
+
+```{r}
+#| results: asis
+#| echo: false
+cat(emix::fa_list(c("fas fa-user-circle" = "Academic statistician passionate about data science and open source software",
+                    "fas fa-user-circle" = "Currently, Deputy Director of ANU Biological Data Science Institute and Executive Editor of R Journal",
+                  "fas fa-graduation-cap" = "PhD in Statistical Bioinformatics",
+                "fas fa-user-graduate" = "BSci (Adv Maths) with major in Mathematics and Statistics",
+                "fas fa-heart fa-beat" = "Loves data and coding")))
+```
+
+
+&nbsp; &nbsp; &nbsp; &nbsp; {{< fa globe >}} https://emitanaka.org &nbsp; &nbsp; <i class="fab fa-twitter"></i> @statsgen &nbsp; &nbsp; <i class="fab fa-mastodon"></i> fosstodon.org/@emitanaka
+
+
+:::
+
+
+
+:::

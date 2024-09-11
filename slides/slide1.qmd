@@ -1,0 +1,707 @@
+---
+title: Statistical anatomy of experiments
+subtitle: "{{< var workshop-title >}}"
+format:
+  anu-light-revealjs:
+    width: 1920
+    height: 1080
+    auto-stretch: false
+    html-math-method: katex
+    self-contained: false
+    css: 
+     - /assets/slides.css
+     - /assets/table.css
+    footer: "{{< var workshop-url >}}"
+author: Emi Tanaka
+institute: Biological Data Science Institute
+date-talk: "17th September 2024"
+filters:
+  - webr
+execute: 
+  echo: false
+webr: 
+  show-startup-message: false  
+  packages: 
+    - tidyverse
+    - palmerpenguins
+---
+
+
+
+
+
+
+```{r}
+#| include: false
+library(tidyverse)
+theme_set(theme_classic(base_size = 18) + theme(plot.title.position = "plot"))
+source("setup.R")
+```
+
+
+# Materials
+
+::: box
+
+All materials will be hosted at<br> [https://{{< var workshop-url >}}](https://{{< var workshop-url >}}){.f1 target="_blank"}
+
+:::
+
+
+
+
+## Learning objectives 
+
+
+```{r}
+#| results: asis 
+#| echo: false
+learning_objectives()
+```
+
+
+
+## {{< fa crosshairs >}} Current learning objective
+
+
+```{r}
+#| results: asis 
+#| echo: false
+learning_objectives(1:2)
+```
+
+## <i class='fas fa-poll'></i> Data collection schemes
+
+::: columns
+
+::: {.column width="50%"}
+
+::: {.callout-note}
+
+## Experimental data
+
+Observations of a carefully *controlled system*. <br><br>
+
+:::
+
+:::
+
+::: {.column width="50%"}
+
+::: {.callout-note}
+
+## Observational data
+
+Observations of a system *without intervention or manipulation*.
+
+:::
+
+:::
+
+
+:::
+
+
+- There are **quasi-experimental data** that lie between experimental and observational data but we won't cover these! 
+
+
+## Case study: COVID-19 {background-color="#F5EDDE"}
+
+
+```{r}
+death <- readRDS(here::here("data/data-input/covid19.rds"))
+```
+
+
+
+::: columns
+
+::: {.column width="60%"}
+
+```{r, dev.args=list(bg="transparent")}
+ggplot(death, aes(age_group, deaths, fill = sex)) +
+  geom_col(position = "dodge") +
+  labs(title = "Number of deaths in Australia due to COVID-19, by age and sex, 2022",
+       caption = "Source: AIHW National Mortality Database, Table S4.1",
+       x = "Age group", y = "", fill = "Sex") +
+  colorspace::scale_fill_discrete_qualitative() +
+  scale_y_continuous(expand = c(0, 0)) +
+theme(legend.position = "bottom") +
+  theme(plot.background = element_rect(fill = "transparent", color = "transparent"),
+        panel.background = element_rect(fill = "transparent", color = "transparent"),
+        legend.background = element_rect(fill = "transparent", color = "transparent"))
+```
+
+
+:::
+
+::: {.column width="40%"}
+
+**Claims**
+
+1. Men are at a higher risk of death from COVID-19.
+1. Age determines the risks of death from COVID-19.
+
+:::
+
+:::
+
+
+
+- Is this an experimental or observational study?
+- How strong is the evidence for the claims?
+
+
+
+## Claim 1. Men are at a higher risk of COVID-19 death
+
+- **When making causal claims, the groups should differ only on the causal factor**.
+
+::: columns
+
+::: {.column width="40%"}
+
+<center>
+
+```{r}
+#| fig-width: 5
+death |> 
+summarise(n = sum(deaths), .by = sex) |> 
+ggplot(aes(sex, n)) + geom_col(aes(fill = sex)) + colorspace::scale_fill_discrete_qualitative() +
+guides(fill = "none") + labs(y = "", x = "", title = "Number of deaths in Australia\ndue to COVID-19, by sex, 2022",
+   caption = "Source: AIHW National Mortality Database, Table S4.1") +
+scale_y_continuous(expand = c(0, 0))
+```
+
+</center>
+
+:::
+
+::: {.column width="60%" .fragment}
+
+- But we have different age composition across sex for COVID-19 deaths.
+
+```{r}
+ggplot(death, aes(age_group, deaths)) +
+  geom_col(position = "dodge", aes(alpha = age_group == "85+", fill = sex)) +
+  labs(title = "Number of deaths in Australia due to COVID-19, by age and sex, 2022",
+       caption = "Source: AIHW National Mortality Database, Table S4.1",
+       x = "Age group", y = "", fill = "Sex") +
+  colorspace::scale_fill_discrete_qualitative() +
+  scale_y_continuous(expand = c(0, 0)) +
+theme(legend.position = "bottom") + guides(alpha = "none") +
+  scale_alpha_discrete(range = c(0.5, 1)) 
+```
+
+
+
+
+
+:::
+
+:::
+
+::: fragment
+
+- Why is the number of deaths lower for males over 85+ than females over 85+?
+
+:::
+
+## Claim 2. Age determines the risks of COVID-19 death
+
+::: fragment
+
+- Population size by age and sex are different
+
+:::
+
+::: columns
+
+::: {.column width="50%" .fragment}
+
+```{r}
+ggplot(death, aes(age_group, population, fill = sex)) +
+  geom_col(position = "dodge", aes(alpha = age_group == "85+")) +
+  labs(title = "Population in Australia, by age and sex, 2022",
+       caption = "Source: Australian Bureau of Statistics",
+       x = "Age group", y = "", fill = "Sex") +
+  colorspace::scale_fill_discrete_qualitative() +
+  scale_y_continuous(expand = c(0, 0)) +
+theme(legend.position = "bottom") + guides(alpha = "none") +
+  scale_alpha_discrete(range = c(0.5, 1))
+```
+
+:::
+
+::: {.column width="50%" .fragment}
+
+```{r}
+ggplot(death, aes(age_group, deathrate, fill = sex)) +
+  geom_col(position = "dodge", aes(alpha = age_group == "85+")) +
+  labs(title = "Number of deaths **per 100,000 people** in Australia<br>due to COVID-19, by age and sex, 2022",
+       caption = "Source: AIHW National Mortality Database, Table S4.1",
+       x = "Age group", y = "", fill = "Sex") +
+  colorspace::scale_fill_discrete_qualitative() +
+  scale_y_continuous(expand = c(0, 0)) +
+theme(legend.position = "bottom",
+  title = ggtext::element_markdown()) + guides(alpha = "none") +
+  scale_alpha_discrete(range = c(0.5, 1))
+```
+
+:::
+
+:::
+
+::: incremental
+
+- The death rate increases as age increases regardless of sex so is the claim true?
+- **Correlation doesn't imply causation!**
+- Many underlying health conditions, such as hypertension, is prevalent in elderly.
+- It may be the combination of COVID-19 and other health conditions that is the causal factor of death.
+
+
+:::
+
+
+
+
+
+## Causal diagram
+
+- We can use *directed acyclic graphs* (DAGs) to draw assumptions (below is a simplified DAG).
+
+```{dot}
+digraph G {
+  rankdir="LR" 
+  fontname="Helvetica,Arial,sans-serif"
+	node [fontname="Helvetica,Arial,sans-serif"  shape="circle"  fixedsize=true style=filled fontsize=8 labelloc="c"  penwidth=0]
+	edge [fontname="Helvetica,Arial,sans-serif" color="grey"]
+
+	Age -> Health -> Death
+	Sex -> Immunity -> Death
+	Age -> Occ -> COVID -> Death
+	Occ [label = "Occupational\nstatus"]
+	COVID [label = "COVID-19\nexposure"]
+  Death [label = "COVID-19\nmortality"]
+  Health [label = "Underlying\nhealth\ncondition"]
+}
+```
+
+- These assumptions are almost always unverifable from the observational data alone.
+- What's more important is to _think_ and _be explicit_ about your assumptions about factors that may contribute to the outcome.
+
+## Case study {{< fa smoking >}}  Weight and smoking {background-color="#F5EDDE"}
+
+**Claim**: Quitting smoking causes weight gain.
+
+::: columns
+
+::: {.column width="60%"}
+
+```{r, dev.args=list(bg="transparent")}
+#| fig-align: center
+#| fig-width: 7
+library(causaldata)
+library(tidyverse)
+theme_set(theme_classic(base_size = 18))
+smoke <- nhefs_complete |>
+  filter(censored == 0) |> 
+  mutate(`Quit smoking` = ifelse(qsmk == 0, "No", "Yes"),
+         `Weight gain in 10 years (kg)` = wt82 - wt71) 
+
+smoke |> 
+  ggplot(aes(`Quit smoking`, `Weight gain in 10 years (kg)`)) +
+  geom_hline(yintercept = 0, color = "grey", linetype = "dashed") +
+  geom_violin(fill = "white") +
+  geom_boxplot(width = 0.1) +
+  theme(plot.background = element_rect(fill = "transparent", color = "transparent"),
+        panel.background = element_rect(fill = "transparent", color = "transparent")) 
+
+```
+
+:::
+
+::: {.column width="40%" .f2}
+
+<br><br>
+
+```{r}
+smoke |> 
+  summarise(Mean = mean(`Weight gain in 10 years (kg)`),
+            Std.Dev = sd(`Weight gain in 10 years (kg)`),
+            .by = `Quit smoking`) |> 
+  knitr::kable(digits = 2) |> 
+  kableExtra::kable_classic(full_width = FALSE, bootstrap_options = "none")
+```
+
+
+:::
+
+
+:::
+
+
+- This is an _observational study_.
+- We observe whether a person quit smoking and their weight gain.
+- Whether the person quit smoking or not is the _exposure_ (variable of interest).
+
+## Draw your assumptions 
+
+```{dot}
+digraph G {
+  rankdir="LR" 
+  fontname="Helvetica,Arial,sans-serif"
+	node [fontname="Helvetica,Arial,sans-serif"  shape="circle"  fixedsize=true style=filled fontsize=8 labelloc="c"  penwidth=0 color="#4f5bd5"]
+	edge [fontname="Helvetica,Arial,sans-serif" color="#4f5bd5"]
+
+	Quit -> Weight
+	Quit [label = "Quit\nsmoking"]
+	Weight [label = "Weight\ngain"]
+}
+```
+
+## Draw your assumptions 
+
+```{dot}
+digraph G {
+  rankdir="LR" 
+  fontname="Helvetica,Arial,sans-serif"
+	node [fontname="Helvetica,Arial,sans-serif"  shape="circle"  fixedsize=true style=filled fontsize=10 labelloc="c"  penwidth=0]
+	edge [fontname="Helvetica,Arial,sans-serif" color="grey"]
+
+	Baseline -> Quit 
+	Quit -> Weight [color="#4f5bd5"]
+	Intensity -> Quit 
+	Exercise -> Quit
+	Age -> Quit
+  Baseline -> Weight
+	Intensity -> Weight 
+	Exercise -> Weight
+	Age -> Weight
+	Baseline [label = "Baseline\nweight"]
+	Intensity [label = "Smoking\nintensity"]
+	Quit [label = "Quit\nsmoking" color="#4f5bd5"]
+	Weight [label = "Weight\ngain" color="#4f5bd5"]
+}
+```
+
+
+- This is a simplified version so it will fit nicely into the slide!
+- Again, these assumptions are almost always unverifable from the observational data alone.
+
+
+
+## Adjusting for confounders
+
+[&nbsp;&nbsp;&nbsp;]{style='background-color:#4f5bd5;'} [true effect]{style='color:#4f5bd5;'} [&nbsp;&nbsp;&nbsp;]{style='background-color:#fa7e1e;'} [confounded effect]{style='color:#fa7e1e;'}
+
+::: columns
+
+::: {.column width="20%"}
+
+```{dot}
+//| fig-width: 2.3
+//| fig-height: 5
+digraph G {
+  rankdir="LR" 
+  fontname="Helvetica,Arial,sans-serif"
+	node [fontname="Helvetica,Arial,sans-serif"  shape="circle"  fixedsize=true style=filled fontsize=10 labelloc="c"  penwidth=0]
+	edge [fontname="Helvetica,Arial,sans-serif" color="grey"]
+
+		Baseline -> Quit 
+	Quit -> Weight [color="#4f5bd5"]
+	Intensity -> Quit 
+	Exercise -> Quit
+	Age -> Quit
+  Baseline -> Weight
+	Intensity -> Weight 
+	Exercise -> Weight
+	Age -> Weight
+	Baseline [label = "Baseline\nweight"]
+	Intensity [label = "Smoking\nintensity"]
+	Quit [label = "Quit\nsmoking" color="#4f5bd5"]
+	Weight [label = "Weight\ngain" color="#4f5bd5"]
+}
+```
+
+
+:::
+
+::: {.column width="20%"}
+
+```{dot}
+//| fig-width: 2.3
+//| fig-height: 5
+digraph G {
+  rankdir="LR" 
+  fontname="Helvetica,Arial,sans-serif"
+	node [fontname="Helvetica,Arial,sans-serif"  shape="circle"  fixedsize=true style=filled fontsize=10 labelloc="c"  penwidth=0]
+	edge [fontname="Helvetica,Arial,sans-serif" color="grey"]
+
+	Baseline -> Quit  [color="#fa7e1e"]
+	Quit -> Weight
+	Intensity -> Quit 
+	Exercise -> Quit
+	Age -> Quit
+  Baseline -> Weight  [color="#fa7e1e"]
+	Intensity -> Weight 
+	Exercise -> Weight
+	Age -> Weight
+	Baseline [label = "Baseline\nweight" color="#fa7e1e"]
+	Intensity [label = "Smoking\nintensity"]
+	Quit [label = "Quit\nsmoking" color="#fa7e1e"]
+	Weight [label = "Weight\ngain" color="#fa7e1e"]
+}
+```
+
+
+:::
+
+
+::: {.column width="20%"}
+
+```{dot}
+//| fig-width: 2.3
+//| fig-height: 5
+digraph G {
+  rankdir="LR" 
+  fontname="Helvetica,Arial,sans-serif"
+	node [fontname="Helvetica,Arial,sans-serif"  shape="circle"  fixedsize=true style=filled fontsize=10 labelloc="c"  penwidth=0]
+	edge [fontname="Helvetica,Arial,sans-serif" color="grey"]
+
+	Baseline -> Quit  
+	Quit -> Weight
+	Intensity -> Quit [color="#fa7e1e"]
+	Exercise -> Quit
+	Age -> Quit
+  Baseline -> Weight  
+	Intensity -> Weight [color="#fa7e1e"]
+	Exercise -> Weight
+	Age -> Weight
+	Baseline [label = "Baseline\nweight"]
+	Intensity [label = "Smoking\nintensity" color="#fa7e1e"]
+	Quit [label = "Quit\nsmoking" color="#fa7e1e"]
+	Weight [label = "Weight\ngain" color="#fa7e1e"]
+}
+```
+
+
+:::
+
+
+::: {.column width="20%"}
+
+```{dot}
+//| fig-width: 2.3
+//| fig-height: 5
+digraph G {
+  rankdir="LR" 
+  fontname="Helvetica,Arial,sans-serif"
+	node [fontname="Helvetica,Arial,sans-serif"  shape="circle"  fixedsize=true style=filled fontsize=10 labelloc="c"  penwidth=0]
+	edge [fontname="Helvetica,Arial,sans-serif" color="grey"]
+
+	Baseline -> Quit  
+	Quit -> Weight
+	Intensity -> Quit
+	Exercise -> Quit [color="#fa7e1e"]
+	Age -> Quit
+  Baseline -> Weight  
+	Intensity -> Weight
+	Exercise -> Weight [color="#fa7e1e"]
+	Age -> Weight
+	Exercise [color="#fa7e1e"]
+	Baseline [label = "Baseline\nweight"]
+	Intensity [label = "Smoking\nintensity"]
+	Quit [label = "Quit\nsmoking" color="#fa7e1e"]
+	Weight [label = "Weight\ngain" color="#fa7e1e"]
+}
+```
+
+
+:::
+
+::: {.column width="20%"}
+
+```{dot}
+//| fig-width: 2.3
+//| fig-height: 5
+digraph G {
+  rankdir="LR" 
+  fontname="Helvetica,Arial,sans-serif"
+	node [fontname="Helvetica,Arial,sans-serif"  shape="circle"  fixedsize=true style=filled fontsize=10 labelloc="c"  penwidth=0]
+	edge [fontname="Helvetica,Arial,sans-serif" color="grey"]
+
+	Baseline -> Quit  
+	Quit -> Weight
+	Intensity -> Quit
+	Exercise -> Quit
+	Age -> Quit [color="#fa7e1e"]
+  Baseline -> Weight  
+	Intensity -> Weight
+	Exercise -> Weight
+	Age -> Weight [color="#fa7e1e"]
+	Age [color="#fa7e1e"]
+	Baseline [label = "Baseline\nweight"]
+	Intensity [label = "Smoking\nintensity"]
+	Quit [label = "Quit\nsmoking" color="#fa7e1e"]
+	Weight [label = "Weight\ngain" color="#fa7e1e"]
+}
+```
+
+
+:::
+
+
+:::
+
+- You want to find the true effect, but it may need to be adjusted for confounders for _observational data_
+
+
+
+##  {{< fa vial >}} Experiments {background-color="#F5EDDE"}
+
+::: columns
+
+::: {.column width="70%" .incremental}
+
+- If we assess evidence for scientific claims, which type of data would be better? Experimental or observational?
+- **Experiments** are the cornerstone of biological research.
+- Experiments are essential to explore, understand or verify a phenomena or a hypothesis.
+- **Comparative experiments** are experiments where the primary interest is to compare a (discrete) set of experimental conditions, referred to as **treatments**.
+- Not all experiments are comparative, but many experiments in the biological sciences are.
+
+:::
+
+::: {.column width="30%"}
+
+![](/images/0fdaff32-2ccd-4bdf-8e0b-ffbad96c0d9c.jpeg)
+
+:::
+
+:::
+
+
+
+
+## Framing your research question 
+
+
+_**Question**: Does regular exposure to red LED light enhances the growth of tomatoes?_
+
+
+::: incremental
+
+- **What is evidence for this?**
+  - Higher plant height? At what time?
+  - Larger sizes of the tomatoes? Again when?
+  - Quicker time to flowering?
+  - Higher number of tomatoes harvested?
+
+:::
+
+. . . 
+
+**_Question_**: Does regular exposure to red LED light enhance _average dry weight of tomatoes at harvest **due to its impact on the production of plant hormones**_?
+
+
+. . . 
+
+
+- **Framing of your research question can influence the design of your experiment!**
+- Formulate your research question with specific intention on how to measure evidence for or against it.
+
+## <i class="fas fa-brain"></i> Brainstorm!
+
+**_Question_**: Does regular exposure to red LED light enhance average dry weight of tomatoes at harvest due to its impact on the production of plant hormones?
+
+::: columns
+
+::: {.column width="60%"}
+
+- Should we record the dry weight of _individual tomatoes_ or the _average dry weight_ of all tomatoes harvested from each plant?
+- What about recording plant hormones?
+- What else can affect the outcome?
+- Draw your causal diagram, particularly thinking about the domain context.
+
+:::
+
+
+::: {.column width="40%"}
+
+<center class="r-stack">
+
+
+![](/images/sources-of-variation.png){width="100%"}
+
+![](/images/direct.png){width="100%" .fragment .fade-out}
+
+
+</center>
+
+
+
+:::
+
+:::
+
+
+
+## A statistical anatomy of a comparative experiment
+
+
+::: columns
+
+::: {.column width="60%"}
+
+- Experimental **aim** (your research question)
+- Main outcome or **response** of interest
+- **Treatments**: a set of experimental conditions
+- **Units**:
+  - **Experimental units**: the smallest units that the treatment can be independently applied to
+  - **Observational units**: the smallest units for which the response is measured
+  - **Blocking factors**: other factors that can affect the outcome
+
+:::
+
+
+
+:::
+
+- **Design**: the mapping of units to treatments (or allotment of treatments to units)
+- A **plan** or **layout** is the design translated into actual units.
+
+
+![](/images/signal-noise.png){.absolute style='top:15%;right:0;'}
+
+
+## Example 
+
+> Researchers are studying the impact of a new irrigation method on tomato growth. They randomly select 40 plants of the same species and divide them into two groups. One group is watered using the new irrigation technique, while the other group is watered using a traditional method. The researchers record the dry weight of each tomato at harvest.
+
+- **Aim**: To assess the new irrigation method on tomato growth.<br> [<i class="fas fa-exclamation-circle"></i> This aim should be more specific in practice.]{style="color:grey;"}
+- **Response**: Dry weight of individual tomatoes at harvest.
+- **Treatments**: New irrigation method vs. traditional method.
+- **Units**:
+  - **Experimental units**: 40 plants of the same species.
+  - **Observational units**: Individual tomatoes.
+- **Design**: Plants <i class="fas fa-arrow-right"></i> Irrigation treatment
+
+
+
+## <i class="fas fa-sticky-note"></i> Summary {background-color="#F5EDDE"}
+
+- **Experimental data** are observations of a carefully controlled system.
+- **Observational data** are observations of a system without intervention or manipulation.
+- When making causal claims, the group should differ only in the treatment/exposure.
+- Correlation doesn't imply causation!
+- **Draw a causal diagram** using a directed acyclic graph (DAG) to brainstorm and be explicit about your assumptions about the relationships between variables.
+- Formulate the research question with specific intention on how to measure evidence for or against it.
+- A statistical anatomy of a comparative experiment includes identifying the **aim**, **response**, **treatments**, **units**, **design**, and other factors that may influence the outcome.
+
+
+
+
+
+
+
+
