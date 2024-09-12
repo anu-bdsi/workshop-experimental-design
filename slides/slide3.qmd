@@ -21,8 +21,7 @@ execute:
 webr: 
   show-startup-message: false  
   packages: 
-    - tidyverse
-    - agridat
+    - edibble
 ---
 
 
@@ -41,7 +40,43 @@ learning_objectives(4:5)
 ```
 
 
-## Simulate the experiment
+## Analysis of experimental data
+
+::: incremental
+
+- Analysis of experimental data depends on various context. 
+- <i class="fas fa-exclamation-circle"></i> We cannot cover all types of analysis in a short period!
+- We'll cover **two-sample tests**, **linear regression** and analysis of variance (**ANOVA**) for some types of experimental data.
+- Two-sample tests and ANOVA can be in fact just formulated as a linear regression.
+
+:::
+
+## Completely randomised design 
+
+```{webr-r}
+library(edibble)
+des1 <- design("CRD Cow Experiment") |> 
+  set_units(cow = 6) |> 
+  set_trts(supp = c("new", "control")) |> 
+  allot_table(supp ~ cow)
+
+des1
+```
+
+
+
+## Simulate the experimental data
+
+```{webr-r}
+data1 <- des1 |> 
+  set_rcrds(milk_yield = cow) |> 
+  simulate_process(milk_yield = function(diff = 1) {
+      effects <- c(new = diff, control = 0)
+      rnorm(n(), 5 + effects[supp], 1) 
+  }) |> 
+  simulate_rcrds(milk_yield = with_params(diff = 5))
+```
+
 
 
 ## Statistical analysis plan
