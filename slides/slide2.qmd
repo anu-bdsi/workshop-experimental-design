@@ -440,7 +440,7 @@ Statistical anatomy of the experiment:
   - **duplication** refers to repeated measurement of the same unit.
 - Replication increases precision of estimated treatment effects
 - Repetition increases precision of the estimated effects of the corresponding strata
-- Duplication helps to measure the technical variation of the measuing instrument 
+- Duplication helps to measure the technical variation of the measuing instrument    
 
 ## Systematic designs 
 
