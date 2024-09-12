@@ -43,22 +43,22 @@ g) Draw a causal diagram for this study to brainstorm the potential sources that
 
 <details style='padding-left: 10%;'><summary>Sample diagram</summary>
 
-```{mermaid}
+```{mermaid g1}
 flowchart LR
-    P0[Plant source] --> P1[50 Plants]
+    P0[Plant source] --> P[50 Plants]
     subgraph Treatments
       direction TB
       F[New fertilizer] 
       S[Standard fertilizer] 
     end 
-    Treatments --> P1
+    Treatments --> P
     subgraph Responses
     H[Plant height]
     L[Number of leaves]
     end
-    P1 --> H
-    P1 --> L
-    Environment[Environment, e.g. sunlight, water, CO2 etc] --> P1
+    P --> H
+    P --> L
+    Environment[Environment, e.g. sunlight, water, CO2 etc] --> P
     M[Measurement device] --> H
     Person[Person] --> M
     style Treatments fill:#fff,stroke:#333,stroke-width:4px
@@ -86,6 +86,26 @@ g) Draw a causal diagram for this study to brainstorm the potential sources that
 
 <details style='padding-left: 10%;'><summary>Sample diagram</summary>
 
+```{mermaid g2}
+flowchart LR
+    T0[Area] --> T1[100 Trees]
+    subgraph Exposures
+      direction TB
+      S[Sunlight exposure] 
+    end 
+    Exposures --> T1
+    subgraph Responses
+    H[Tree height]
+    end
+    T1 --> H
+    Management --> T1
+    Environment[Other environmental effects, e.g. water, CO2 etc] --> T1
+    M[Measurement device] --> H
+    Person[Person] --> M
+    style Exposures fill:#fff,stroke:#333,stroke-width:4px
+    style Responses fill:#fff,stroke:#333,stroke-width:4px
+```
+
 </details>
 :::
 
@@ -104,6 +124,27 @@ e) What are the observational units in this study? `r fitb("adults?", ignore_cas
 g) Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.
 
 <details style='padding-left: 10%;'><summary>Sample diagram</summary>
+
+```{mermaid}
+flowchart LR
+    P0[Adult source] --> P1[1000 Adults]
+    subgraph Exposures
+      direction TB
+      P[Physical activity levels] 
+    end 
+    Exposures --> P1
+    subgraph Responses
+    H[Heart disease]
+    end
+    P1 --> H
+    L[Lifestyle] --> P1
+    Environment --> P1
+    Genetics --> P1
+    Age --> P1
+    Diet --> P1
+    style Exposures fill:#fff,stroke:#333,stroke-width:4px
+    style Responses fill:#fff,stroke:#333,stroke-width:4px
+```
 
 </details>
 :::
@@ -124,6 +165,27 @@ g) Draw a causal diagram for this study to brainstorm the potential sources that
 
 <details style='padding-left: 10%;'><summary>Sample diagram</summary>
 
+```{mermaid}
+flowchart LR
+    P1[200 Patients]
+    subgraph Treatments
+      direction TB
+      D[Drug] 
+      P[Placebo]
+    end 
+    Treatments --> P1
+    subgraph Responses
+    B[Blood pressure]
+    end
+    P1 --> B
+    L[Lifestyle] --> P1
+    Environment --> P1
+    Genetics --> P1
+    Age --> P1
+    Diet --> P1
+    style Treatments fill:#fff,stroke:#333,stroke-width:4px
+    style Responses fill:#fff,stroke:#333,stroke-width:4px
+```
 </details>
 :::
 
@@ -143,6 +205,27 @@ e) What are the observational units in this study? `r fitb("fishe?s?", ignore_ca
 g) Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.
 
 <details style='padding-left: 10%;'><summary>Sample diagram</summary>
+
+```{mermaid}
+flowchart LR
+    P1[100 Fish]
+    subgraph Treatments
+      direction TB
+      W15[Water 15 Celsius degrees] 
+      W25[Water 25 Celsius degrees]
+    end 
+    Treatments --> Tank
+    subgraph Responses
+    WG[Weight gain]
+    end
+    P1 --> WG
+    Environment --> Tank
+    F[Fish source] --> P1
+    Tank --> P1
+    Diet --> Tank
+    style Treatments fill:#fff,stroke:#333,stroke-width:4px
+    style Responses fill:#fff,stroke:#333,stroke-width:4px
+```
 
 </details>
 :::
