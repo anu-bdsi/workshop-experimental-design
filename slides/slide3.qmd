@@ -40,6 +40,36 @@ source("setup.R")
 learning_objectives(4:5)
 ```
 
+
+## Simulate the experiment
+
+
+## Statistical analysis plan
+
+::: f2
+
+**Analysis of variance**
+
+```{r}
+#| eval: false
+options(knitr.kable.NA = '')
+anova(lm(Weight ~ Treatment + Glasshouse, data = df10v4)) |> 
+  knitr::kable(digits = 3)
+```
+
+**Estimated regression parameters**
+
+```{r}
+#| eval: false
+summary(lm(Weight ~ Treatment + Glasshouse, data = df10v4)) |> 
+  broom::tidy() |> 
+  mutate(Term = c("Intercept", "Treatment", "Glasshouse")) |> 
+  select(Term, Estimate = estimate, `Std Error` = std.error, `P value` = p.value) |> 
+  knitr::kable(digits = 3)
+```
+
+:::
+
 ## Analysis of variance (ANOVA)
 
 

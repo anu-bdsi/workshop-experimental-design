@@ -16,6 +16,12 @@ author: Emi Tanaka
 institute: Biological Data Science Institute
 date-talk: "20th September 2024"
 engine: knitr
+filters:
+  - webr
+webr: 
+  show-startup-message: false    
+  packages:
+    - edibble
 execute: 
   echo: false
 ---
@@ -47,7 +53,7 @@ milk <- function(n = 1) {
   glue::glue("<span class='flex' style='display:inline-block;width:120px;margin-right:20px;'>{paste0(rep(amilk, n), collapse = '')}</span>")
 }
 
-set.seed(1)
+set.seed(2024)
 wheat <- sample(sprintf("<img src='/images/grain%d.png' width='80px' style='margin-right:20px;'>", 1:12))
 water <- sprintf("<span style='width:50px;display:inline-block;margin-right:0px;'><img src='/images/water%d.png' width='40px'></span>", 1:2)
 brand <- sprintf("<span style='width:50px;display:inline-block;margin-right:0px;'><img src='/images/brand%d.png' width='40px'></span>", 1:2)
@@ -434,13 +440,17 @@ Statistical anatomy of the experiment:
 
 ## Replication, Repetition, and Duplication
 
+::: incremental
+
 - In an experimental context, treatment
   - **replication** refers to the (average) number of _independent_ allocation of each treatment to experimental units, 
   - **repetition** refers to observational units allocated with the same treatment, and
   - **duplication** refers to repeated measurement of the same unit.
-- Replication increases precision of estimated treatment effects
-- Repetition increases precision of the estimated effects of the corresponding strata
-- Duplication helps to measure the technical variation of the measuing instrument    
+- Replication increases precision of estimated treatment effects.
+- Repetition helps to measure the variation of the observational units.
+- Duplication helps to measure the technical variation of the measuing instrument.    
+
+:::
 
 ## Systematic designs 
 
@@ -488,39 +498,286 @@ Statistical anatomy of the experiment:
 ## How to randomise?
 
 - Preferably use a computer to randomise treatments to units. 
+- We'll use the `edibble` R package to demonstrate this.
+
+```{webr-r}
+#| echo: true
+library(edibble)
+set.seed(1) # to replicate the result 
+design("Randomised complete block design") |> 
+  set_units(pen = 3, 
+            cow = nested_in(pen, 2)) |> 
+  set_trts(supplement = c("new", "control")) |> 
+  allot_table(supplement ~ cow, order = "random")
+```
+
+
+
+## Factorial treatment structure
+
+**Aim**: study the effect of fertlizer type A and type B and irrigation on wheat yield
+
+::: columns
+
+::: {.column width="27%"}
+
+`r paste(wheat[1:4], collapse = "")`  
+`r paste(trts[1:4], collapse = "")`   
+`r paste(wheat[5:8], collapse = "")`  
+`r paste(trts[5:8], collapse = "")`  
+`r paste(wheat[9:12], collapse = "")`  
+`r paste(trts[9:12], collapse = "")`  
+
+
+:::
+
+::: {.column width="40%"}
+
+Statistical anatomy:
+
+* **Units**:
+  * **Experimental units**: 12 plots
+  * **Observational units**: 12 plots
+* **Observation**: wheat yield
+* **Treatments**: combination of:
+   * Water: irrigated or rain-fed
+   * Fertilizer: type A or type B
+* **Allotment**: 
+  * Water <i class="fas fa-arrow-right"></i> plots
+  * Fertilizer <i class="fas fa-arrow-right"></i> plots
+
+:::
+
+
+::: {.column width="33%"}
+
+_How many treatment replications do we have?_
+
+::: fragment
+
+```{r, echo = FALSE}
+tibble(trts) %>% 
+  count(trts) %>% 
+  knitr::kable(escape = FALSE, col.names = c("Treatment", "Replication"), align = "cc", format = "html") %>% 
+  kableExtra::kable_classic(full_width = FALSE)
+```
+
+<br>
+
+```{r, echo = FALSE}
+tibble(trts) %>% 
+  separate(trts, into = c("Water", "Fertilizer"), sep = "span><span") %>% 
+  mutate(Water = paste0(Water, "span>"),
+         Fertilizer = paste0("<span", Fertilizer)) %>% 
+  pivot_longer(1:2) %>% 
+  count(value) %>% 
+  knitr::kable(escape = FALSE, col.names = c("Treatment factor", "Count"), align = "cc", format = "html") %>% 
+  kableExtra::kable_classic(full_width = FALSE) 
+```
+
+:::
+
+:::
+
+
+:::
+
+
+
+## Factorial treatment structure with different allotment
+
+
+::: columns
+
+::: {.column width="27%"}
+
+`r paste(wheat[1:4], collapse = "")`  
+`r paste(trts2[1:4], collapse = "")`   
+`r paste(wheat[5:8], collapse = "")`  
+`r paste(trts2[5:8], collapse = "")`  
+`r paste(wheat[9:12], collapse = "")`  
+`r paste(trts2[9:12], collapse = "")`  
+
+
+:::
+
+::: {.column width="40%"}
+
+
+* **Allotment**: 
+  * Water and fertilizer  <i class="fas fa-arrow-right"></i> plots
+
+:::
+
+
+::: {.column width="33%"}
+
+
+::: fragment
+
+```{r, echo = FALSE}
+tibble(trts2) %>% 
+  count(trts2) %>% 
+  knitr::kable(escape = FALSE, col.names = c("Treatment", "Replication"), align = "cc", format = "html") %>% 
+  kableExtra::kable_classic(full_width = FALSE)
+```
+
+<br>
+
+```{r, echo = FALSE}
+tibble(trts2) %>% 
+  separate(trts2, into = c("Water", "Fertilizer"), sep = "span><span") %>% 
+  mutate(Water = paste0(Water, "span>"),
+         Fertilizer = paste0("<span", Fertilizer)) %>% 
+  pivot_longer(1:2) %>% 
+  count(value) %>% 
+  knitr::kable(escape = FALSE, col.names = c("Treatment factor", "Count"), align = "cc", format = "html") %>% 
+  kableExtra::kable_classic(full_width = FALSE) 
+```
+
+:::
+
+:::
+
+
+:::
+
+
+## Split-plot design
+
+
+::: columns
+
+::: {.column width="27%"}
+
+<center>
+
+::: {.border-box .w-50}
+`r paste(wheat[1:2], collapse = "")`  
+`r paste(trts3[1:2], collapse = "")`   
+:::
+
+::: {.border-box .w-50}
+`r paste(wheat[3:4], collapse = "")`  
+`r paste(trts3[3:4], collapse = "")`   
+:::
+
+::: {.border-box .w-50}
+`r paste(wheat[5:6], collapse = "")`  
+`r paste(trts3[5:6], collapse = "")`   
+:::
+
+::: {.border-box .w-50}
+`r paste(wheat[7:8], collapse = "")`  
+`r paste(trts3[7:8], collapse = "")`   
+:::
+
+::: {.border-box .w-50}
+`r paste(wheat[9:10], collapse = "")`  
+`r paste(trts3[9:10], collapse = "")`   
+:::
+
+
+::: {.border-box .w-50}
+`r paste(wheat[11:12], collapse = "")`  
+`r paste(trts3[11:12], collapse = "")`   
+:::
+
+
+</center>
+
+
+
+:::
+
+::: {.column width="40%"}
+
+
+* **Units**: 6 strips with 2 plots each
+* **Allotment**: 
+  * Water <i class="fas fa-arrow-right"></i> strip
+  * Fertilizer <i class="fas fa-arrow-right"></i> plot
+  
+* This design is a factorial design but there is a nested unit structure with constaint in treatment allocation  
+  
+:::
+
+
+::: {.column width="33%"}
+
+
+```{r, echo = FALSE}
+tibble(trts3) %>% 
+  count(trts3) %>% 
+  knitr::kable(escape = FALSE, col.names = c("Treatment", "Replication"), align = "cc", format = "html") %>% 
+  kableExtra::kable_classic(full_width = FALSE)
+```
+
+<br>
+
+```{r, echo = FALSE}
+tibble(trts3) %>% 
+  separate(trts3, into = c("Water", "Fertilizer"), sep = "span><span") %>% 
+  mutate(Water = paste0(Water, "span>"),
+         Fertilizer = paste0("<span", Fertilizer)) %>% 
+  pivot_longer(1:2) %>% 
+  count(value) %>% 
+  knitr::kable(escape = FALSE, col.names = c("Treatment factor", "Count"), align = "cc", format = "html") %>% 
+  kableExtra::kable_classic(full_width = FALSE) 
+```
+
+:::
+
+
+:::
+
+## Allocating treatments 
+
+```{webr-r}
+#| echo: true
+library(edibble)
+trt_str <- set_trts(fertilizer = c("A", "B"),
+                    water = c("irrigate", "rainfed"))
+unit_str1 <- set_units(plot = 12)
+unit_str2 <- set_units(strip = 6,
+                       plot = nested_in(strip, 2))
+
+des1 <- (unit_str1 + trt_str) |> allot_table(fertilizer ~ plot, water ~ plot)
+des2 <- (unit_str1 + trt_str) |> allot_table(fertilizer:water ~ plot)
+des3 <- (unit_str2 + trt_str) |> allot_table(fertilizer:water ~ plot)
+
+des1
+```
+
 
 
 
 ## Design anatomy
 
-## Simulate the experiment
+- Design anatomy shows the breakdown of degrees of freedom across different sources of variation (related to _skeletonal ANOVA_)
 
-
-## Statistical analysis plan
-
-::: f2
-
-**Analysis of variance**
-
-```{r}
-#| eval: false
-options(knitr.kable.NA = '')
-anova(lm(Weight ~ Treatment + Glasshouse, data = df10v4)) |> 
-  knitr::kable(digits = 3)
+```{webr-r}
+design_anatomy(des3)
 ```
 
-**Estimated regression parameters**
+## Invalid design
 
-```{r}
-#| eval: false
-summary(lm(Weight ~ Treatment + Glasshouse, data = df10v4)) |> 
-  broom::tidy() |> 
-  mutate(Term = c("Intercept", "Treatment", "Glasshouse")) |> 
-  select(Term, Estimate = estimate, `Std Error` = std.error, `P value` = p.value) |> 
-  knitr::kable(digits = 3)
+- The example below has no degrees of freedom for the residual source of variation
+
+```{webr-r}
+library(edibble)
+des_invalid <- design("Invalid design") |> 
+  set_units(pen = 2, 
+            cow = nested_in(pen, 3)) |> 
+  set_trts(supp = c("new", "control")) |> 
+  allot_table(supp ~ pen)
+
+design_anatomy(des_invalid)
 ```
 
-:::
+
+
+
 
 ## Summary
 
@@ -533,5 +790,6 @@ summary(lm(Weight ~ Treatment + Glasshouse, data = df10v4)) |>
 - Block what you can, randomise what you cannot.
 - Watch out for pseudoreplication!
 - Randomise using a computer program if possible.
+- Produce a design anatomy to see the spread of the degrees of freedom across sources of variation.
 
 :::
