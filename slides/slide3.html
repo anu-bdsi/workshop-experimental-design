@@ -31,74 +31,25 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-    /* CSS for syntax highlighting */
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      { color: #003b4f; background-color: #f1f3f5; }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span { color: #003b4f; } /* Normal */
-    code span.al { color: #ad0000; } /* Alert */
-    code span.an { color: #5e5e5e; } /* Annotation */
-    code span.at { color: #657422; } /* Attribute */
-    code span.bn { color: #ad0000; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #20794d; } /* Char */
-    code span.cn { color: #8f5902; } /* Constant */
-    code span.co { color: #5e5e5e; } /* Comment */
-    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
-    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
-    code span.dt { color: #ad0000; } /* DataType */
-    code span.dv { color: #ad0000; } /* DecVal */
-    code span.er { color: #ad0000; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #ad0000; } /* Float */
-    code span.fu { color: #4758ab; } /* Function */
-    code span.im { color: #00769e; } /* Import */
-    code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
-    code span.op { color: #5e5e5e; } /* Operator */
-    code span.ot { color: #003b4f; } /* Other */
-    code span.pp { color: #ad0000; } /* Preprocessor */
-    code span.sc { color: #5e5e5e; } /* SpecialChar */
-    code span.ss { color: #20794d; } /* SpecialString */
-    code span.st { color: #20794d; } /* String */
-    code span.va { color: #111111; } /* Variable */
-    code span.vs { color: #20794d; } /* VerbatimString */
-    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
   <link rel="stylesheet" href="../assets/slides.css">
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -532,7 +483,7 @@
   // Document level settings ----
 
   // Determine if we need to install R packages
-  globalThis.qwebrInstallRPackagesList = ['edibble'];
+  globalThis.qwebrInstallRPackagesList = ['edibble', 'broom'];
 
   // Specify possible locations to search for the repository
   globalThis.qwebrPackageRepoURLS = ['https://repo.r-wasm.org/'];
@@ -554,7 +505,7 @@
   };
 
   // Store cell data
-  globalThis.qwebrCellDetails = [{"id":1,"code":"library(edibble)\ndes1 <- design(\"CRD Cow Experiment\") |> \n  set_units(cow = 6) |> \n  set_trts(supp = c(\"new\", \"control\")) |> \n  allot_table(supp ~ cow)\n\ndes1","options":{"output":"true","read-only":"false","comment":"","results":"markup","autorun":"false","fig-width":7,"context":"interactive","message":"true","out-height":"","dpi":72,"fig-height":5,"fig-cap":"","classes":"","warning":"true","label":"unnamed-chunk-1","out-width":"700px"}},{"id":2,"code":"data1 <- des1 |> \n  set_rcrds(milk_yield = cow) |> \n  simulate_process(milk_yield = function(diff = 1) {\n      effects <- c(new = diff, control = 0)\n      rnorm(n(), 5 + effects[supp], 1) \n  }) |> \n  simulate_rcrds(milk_yield = with_params(diff = 5))","options":{"output":"true","read-only":"false","comment":"","results":"markup","autorun":"false","fig-width":7,"context":"interactive","message":"true","out-height":"","dpi":72,"fig-height":5,"fig-cap":"","classes":"","warning":"true","label":"unnamed-chunk-2","out-width":"700px"}}];
+  globalThis.qwebrCellDetails = [{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"true","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-1","fig-cap":"","classes":"","out-height":""},"id":1,"code":"library(edibble)\ndes1 <- design(\"CRD Cow Experiment\", .seed = 1) |> \n  set_units(cow = 6) |> \n  set_trts(supp = c(\"new\", \"control\")) |> \n  allot_table(supp ~ cow)\n\ndes1"},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"true","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-2","fig-cap":"","classes":"","out-height":""},"id":2,"code":"data1 <- des1 |> \n  set_rcrds(milk_yield = cow) |> \n  expect_rcrds(milk_yield >= 1) |> \n  autofill_rcrds(.seed = 10) # a lazy-person's simulation\n# note that milk yield simulated is _not_ meaningful here \n# but just gives you data to simulate an analysis before the real experiment\ndata1 "},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"true","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-3","fig-cap":"","classes":"","out-height":""},"id":3,"code":"y1 <- data1$milk_yield[data1$supp == \"control\"]\ny1"},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"true","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-4","fig-cap":"","classes":"","out-height":""},"id":4,"code":"mean(y1)"},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"true","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-5","fig-cap":"","classes":"","out-height":""},"id":5,"code":"sd(y1)"},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"true","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-6","fig-cap":"","classes":"","out-height":""},"id":6,"code":"y2 <- data1$milk_yield[data1$supp == \"new\"]\ny2"},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"true","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-7","fig-cap":"","classes":"","out-height":""},"id":7,"code":"mean(y2)"},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"true","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-8","fig-cap":"","classes":"","out-height":""},"id":8,"code":"sd(y2)"},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"false","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-9","fig-cap":"","classes":"","out-height":""},"id":9,"code":"t.test(y2, y1, alternative = \"greater\")"},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"true","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-10","fig-cap":"","classes":"","out-height":""},"id":10,"code":"data2 <- design(\"Paired observations\") |> \n  set_units(cow = 3, \n            period = 2, \n            observation = crossed_by(period, cow)) |> \n  set_trts(supp = c(\"new\", \"control\")) |> \n  allot_table(supp ~ observation) |> \n  set_rcrds(milk_yield = observation) |> \n  expect_rcrds(milk_yield >= 1) |> \n  autofill_rcrds()\n  \ndata2"},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"false","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-11","fig-cap":"","classes":"","out-height":""},"id":11,"code":"y1 <- data2$milk_yield[data2$supp == \"control\"]\ny2 <- data2$milk_yield[data2$supp == \"new\"]\n\nt.test(y2, y1, alternative = \"greater\") # this is _wrong_ to use for paired observations!\nt.test(y2, y1, alternative = \"greater\", paired = TRUE) \nt.test(y2 - y1, alternative = \"greater\") # this one-sided t-test is the same as paired t-test!"},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"true","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-12","fig-cap":"","classes":"","out-height":""},"id":12,"code":"broom::tidy(lm(milk_yield ~ supp, data = data1))"},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"false","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-13","fig-cap":"","classes":"","out-height":""},"id":13,"code":"t.test(data1$milk_yield[data1$supp == \"new\"],\n       data1$milk_yield[data1$supp == \"control\"], \n       alternative = \"two.sided\",\n       var.equal = TRUE)"},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"true","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-14","fig-cap":"","classes":"","out-height":""},"id":14,"code":"des_grafting <- design(\"Grafting for horses\") |> \n  set_units(horse = 9, \n            skin_piece = nested_in(horse, 6)) |> \n  set_trts(graft_method = c(\"A\", \"B\", \"C\")) |> \n  set_rcrds(skin_thickness = skin_piece) |> \n  expect_rcrds(skin_thickness >= 0.1) |> \n  allot_table(graft_method ~ horse)"},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"true","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-15","fig-cap":"","classes":"","out-height":""},"id":15,"code":"data_grafting <- autofill_rcrds(des_grafting)"},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"true","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-16","fig-cap":"","classes":"","out-height":""},"id":16,"code":"m_g <- lm(skin_thickness ~ graft_method, data = data_grafting)\nm_gh <- lm(skin_thickness ~ graft_method + horse, data = data_grafting)\nm_hg <- lm(skin_thickness ~ horse + graft_method, data = data_grafting)\nm_geh <- aov(skin_thickness ~ graft_method + Error(horse), data = data_grafting)"},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"true","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-17","fig-cap":"","classes":"","out-height":""},"id":17,"code":"anova(m_gh) "},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"false","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-18","fig-cap":"","classes":"","out-height":""},"id":18,"code":"anova(m_g) # missing variation due to horse\nanova(m_gh) # pseudoreplication!!!\nanova(m_hg) # order of terms in the model matter"},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"true","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-19","fig-cap":"","classes":"","out-height":""},"id":19,"code":"summary(m_geh) "},{"options":{"output":"true","fig-height":5,"warning":"true","read-only":"false","autorun":"true","fig-width":7,"out-width":"700px","message":"true","context":"interactive","comment":"","dpi":72,"results":"markup","label":"unnamed-chunk-20","fig-cap":"","classes":"","out-height":""},"id":20,"code":"anova(m_g, m_gh)"}];
 
   </script>
   <script type="module">
@@ -1492,60 +1443,240 @@ Emi Tanaka
 <ul>
 <li class="fragment">Analysis of experimental data depends on various context.</li>
 <li class="fragment"><i class="fas fa-exclamation-circle"></i> We cannot cover all types of analysis in a short period!</li>
-<li class="fragment">We’ll cover <strong>two-sample tests</strong>, <strong>linear regression</strong> and analysis of variance (<strong>ANOVA</strong>) for some types of experimental data.</li>
-<li class="fragment">Two-sample tests and ANOVA can be in fact just formulated as a linear regression.</li>
+<li class="fragment">We briefly cover
+<ul>
+<li class="fragment"><strong>two-sample <span class="math inline">t</span>-test</strong>,</li>
+<li class="fragment"><strong>linear model</strong> and</li>
+<li class="fragment">analysis of variance (<strong>ANOVA</strong>) for some types of experimental data.</li>
+</ul></li>
+<li class="fragment">Two-sample <span class="math inline">t</span>-test and ANOVA can be in fact just formulated as a linear (mixed) model.</li>
 </ul>
 </div>
 </section>
 <section id="completely-randomised-design" class="slide level2">
 <h2>Completely randomised design</h2>
+<ul>
+<li>Let’s suppose we have a completely randomised design as below.</li>
+</ul>
 <div id="qwebr-insertion-location-1"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </section>
 <section id="simulate-the-experimental-data" class="slide level2">
 <h2>Simulate the experimental data</h2>
+<ul>
+<li>You can simulate in various way - we are going to use a lazy approach using <code>autofill_rcrds</code> from the <code>edibble</code> R package</li>
+</ul>
 <div id="qwebr-insertion-location-2"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </section>
+<section id="comparing-two-samples" class="slide level2">
+<h2>Comparing two samples</h2>
+<ul>
+<li>Suppose we have two <em>independent</em> samples like below.</li>
+</ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Milk yield for the <em>control supplement</em>:</li>
+</ul>
+<div id="qwebr-insertion-location-3"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<ul>
+<li>And its corresponding average:</li>
+</ul>
+<div id="qwebr-insertion-location-4"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<ul>
+<li>And sample standard deviation:</li>
+</ul>
+<div id="qwebr-insertion-location-5"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>Milk yield for the <em>new supplement</em>:</li>
+</ul>
+<div id="qwebr-insertion-location-6"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<ul>
+<li>And its corresponding average:</li>
+</ul>
+<div id="qwebr-insertion-location-7"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<ul>
+<li>And sample standard deviation:</li>
+</ul>
+<div id="qwebr-insertion-location-8"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+</div>
+</section>
+<section id="two-sample-t-test" class="slide level2">
+<h2>Two-sample <span class="math inline">t</span>-test</h2>
+<ul>
+<li>Is the average milk yield using the new supplement <span class="math inline">(\bar{y}_2)</span> significantly greater than the average milk yield using the control supplement <span class="math inline">(\bar{y}_1)</span>?</li>
+</ul>
+<div id="qwebr-insertion-location-9"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<div class="fragment">
+<details>
+<ul>
+<li>Suppose that we have two groups <span class="math inline">Y_1 \sim N(\mu_1, \sigma_1^2)</span> and <span class="math inline">Y_2 \sim N(\mu_2, \sigma_2^2)</span> with <span class="math inline">n_1</span> and <span class="math inline">n_2</span> observations from each group, respectively.</li>
+<li><span class="math inline">H_0: \mu_1 = \mu_2</span> vs <span class="math inline">H_1: \mu_1 &lt; \mu_2</span></li>
+<li><span class="math inline">t = \frac{\bar{y}_2 - \bar{y}_1}{s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}</span> where <span class="math inline">s_p = \sqrt{\frac{s_1^2(n_1 - 1)+s_2^2(n_2 - 1)}{n_1 + n_2 - 2}}</span> is the pooled standard deviation and <span class="math inline">\bar{y}_k</span> and <span class="math inline">s_k</span> is the sample mean and sample standard deviation, respectively, for the <span class="math inline">k</span>-th group.</li>
+<li><span class="math inline">p</span>-value is <span class="math inline">P(t_{n_1+n_2 - 2} \geq t)</span> where <span class="math inline">t_{n_1+n_2 - 2}</span> is a <span class="math inline">t</span>-distribution with <span class="math inline">n_1 + n_2 - 2</span> degrees of freedom.</li>
+</ul>
+</details>
+<ul>
+<li>Low <span class="math inline">p</span>-value (usually <span class="math inline">&lt;0.05</span>) indicates evidence that the new supplement provides a signficantly higher milk yield.</li>
+</ul>
+</div>
+</section>
+<section id="paired-observations" class="slide level2">
+<h2>Paired observations</h2>
+<div id="qwebr-insertion-location-10"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</section>
+<section id="paired-t-test" class="slide level2">
+<h2>Paired <span class="math inline">t</span>-test</h2>
+<ul>
+<li>A paired <span class="math inline">t</span>-test is the same as the one-sample <span class="math inline">t</span>-test for the differences between the paired observations.</li>
+</ul>
+<div id="qwebr-insertion-location-11"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<details>
+<ul>
+<li>Suppose that we have <span class="math inline">n</span> paired observations and <span class="math inline">Y_d \sim N(\mu_d, \sigma^2_d)</span>.</li>
+<li><span class="math inline">H_0: \mu_d = 0</span> vs <span class="math inline">H_1: \mu_d &gt; 0</span></li>
+<li><span class="math inline">t = \frac{\bar{y}_2 - \bar{y}_1}{s_d\sqrt{\frac{2}{n}}}</span> where <span class="math inline">s_d</span> is the sample standard deviation of the differences between paired observations.</li>
+<li><span class="math inline">p</span>-value is <span class="math inline">P(t_{2n - 1} \geq t)</span>.</li>
+</ul>
+</details>
+</section>
+<section id="two-sample-t-test-as-linear-regression" class="slide level2">
+<h2>Two-sample <span class="math inline">t</span>-test as linear regression</h2>
+<div id="qwebr-insertion-location-12"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<ul>
+<li>The <span class="math inline">t</span>-statistic above for the <code>suppnew</code> is the same as the <span class="math inline">t</span>-statistic from the two-sample <span class="math inline">t</span>-test below.</li>
+</ul>
+<div id="qwebr-insertion-location-13"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<ul>
+<li><i class="fas fa-exclamation-circle"></i> If there are more than 2 groups, you should not do a pairwise comparison of all groups without adjustment for <em>multiple comparison</em> (not covered today).</li>
+</ul>
+</section>
+<section id="example-horse-skin-grafting" class="slide level2" data-background-color="#F5EDDE">
+<h2>Example: horse skin grafting</h2>
+<ul>
+<li>Suppose we have an experiment (with ethic approval) to compare 3 different skin grafting methods on 9 horses.</li>
+<li>The grafting method is independently applied to each horse.</li>
+<li>The skin is cut into 6 pieces and thickness is measured for each skin piece.</li>
+</ul>
+<div class="fragment">
+<div id="qwebr-insertion-location-14"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+<div class="fragment">
+<ul>
+<li>Let’s simulate the data.</li>
+</ul>
+<div id="qwebr-insertion-location-15"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+</section>
 <section id="statistical-analysis-plan" class="slide level2">
 <h2>Statistical analysis plan</h2>
+<div>
+<ul>
+<li class="fragment">A <strong>statistical analysis plan</strong> (SAP) outlines the statistical methods that will be used for analyzing the data.</li>
+<li class="fragment">It is good practice to have SAP written before the data collection (and required for some fields, e.g.&nbsp;clinical trials).</li>
+<li class="fragment">But what model should we use for the horse skin grafting data?</li>
+</ul>
+</div>
+<div class="fragment">
+<div id="qwebr-insertion-location-16"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+<div class="fragment">
+<ul>
+<li>In principle, all treaments (<code>graft_method</code>) and blocking factors (<code>horse</code>) in the design should be included in the model.</li>
+<li>Blocking factors are generally assumed to have no interaction effect with the treatment.</li>
+</ul>
+</div>
+</section>
+<section id="analysis-of-variance-anova-table" class="slide level2">
+<h2>Analysis of variance (ANOVA) table</h2>
+<ul>
+<li>ANOVA table show the decomposition of the total variance into different sources of variation.</li>
+</ul>
+<div id="qwebr-insertion-location-17"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</section>
+<section id="anova-mathematically" class="slide level2">
+<h2>ANOVA mathematically</h2>
 <div class="f2">
-<p><strong>Analysis of variance</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">options</span>(<span class="at">knitr.kable.NA =</span> <span class="st">''</span>)</span>
-<span id="cb1-2"><a></a><span class="fu">anova</span>(<span class="fu">lm</span>(Weight <span class="sc">~</span> Treatment <span class="sc">+</span> Glasshouse, <span class="at">data =</span> df10v4)) <span class="sc">|&gt;</span> </span>
-<span id="cb1-3"><a></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><strong>Estimated regression parameters</strong></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a><span class="fu">summary</span>(<span class="fu">lm</span>(Weight <span class="sc">~</span> Treatment <span class="sc">+</span> Glasshouse, <span class="at">data =</span> df10v4)) <span class="sc">|&gt;</span> </span>
-<span id="cb2-2"><a></a>  broom<span class="sc">::</span><span class="fu">tidy</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb2-3"><a></a>  <span class="fu">mutate</span>(<span class="at">Term =</span> <span class="fu">c</span>(<span class="st">"Intercept"</span>, <span class="st">"Treatment"</span>, <span class="st">"Glasshouse"</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb2-4"><a></a>  <span class="fu">select</span>(Term, <span class="at">Estimate =</span> estimate, <span class="st">`</span><span class="at">Std Error</span><span class="st">`</span> <span class="ot">=</span> std.error, <span class="st">`</span><span class="at">P value</span><span class="st">`</span> <span class="ot">=</span> p.value) <span class="sc">|&gt;</span> </span>
-<span id="cb2-5"><a></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</section>
-<section id="analysis-of-variance-anova" class="slide level2">
-<h2>Analysis of variance (ANOVA)</h2>
-</section>
-<section id="linear-models" class="slide level2">
-<h2>Linear models</h2>
 <ul>
-<li>ANOVA is a special case of linear models</li>
+<li>Suppose that <span class="math inline">y_{ij}</span> is the measured thickness for the <span class="math inline">j</span>-th skin piece of the <span class="math inline">i</span>-th horse for <span class="math inline">i = 1, ..., 9</span> and <span class="math inline">j = 1, ..., 6</span>.</li>
+<li>Total sum of squares (<span class="math inline">\text{Total SS}</span>) is <span class="math inline">\sum_{i=1}^9 \sum_{j=1}^6 (y_{ij} - \bar{y})^2</span> where <span class="math inline">\bar{y}</span> is the overall mean.</li>
+<li>Treatment (grafting method) sum of squares (<span class="math inline">\text{Treatment SS}</span>) is <span class="math display">18 \times \sum_{k\in \{A, B, C\}} \left(\frac{1}{18}\sum_{i\in\mathcal{T}(k)} \sum_{j=1}^6y_{ij} - \bar{y}\right)^2</span> where <span class="math inline">\mathcal{T}(k)</span> is the set of (three) horses that received treatment <span class="math inline">k</span>.</li>
+<li>Experimental unit (horse) residual sum of squares (<span class="math inline">\text{EU Residual SS}</span>) is <span class="math display">6 \times \sum_{i=1}^9 \left(\frac{1}{6}\sum_{j=1}^6 y_{ij} - \bar{y}\right)^2 - \text{Treatment SS}.</span></li>
+<li>Residual sum of squares (<span class="math inline">\text{Residual SS}</span>) is <span class="math inline">\text{Total SS} - \text{Treatment SS} - \text{EU Residual SS}</span>.</li>
+<li>The mean square values are obtained by dividing the sum of squares by the corresponding degrees of freedom.</li>
+<li>The F-value is given by mean square value divided by mean square of residual.</li>
 </ul>
+</div>
 </section>
-<section id="common-diagnostics" class="slide level2">
-<h2>Common diagnostics</h2>
+<section id="f-test" class="slide level2">
+<h2>F-test</h2>
 <ul>
-<li>Check the residual plot</li>
-<li>Outliers</li>
-<li>Transformation of data</li>
-<li>Multiple comparisons</li>
+<li>ANOVA can be used to compare means of more than two groups.</li>
 </ul>
+<div id="qwebr-insertion-location-18"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<ul>
+<li>The most apprororpiate analysis for testing the treatment effect is to compare the corresponding mean square value with the <em>experimental unit residual mean square</em> value.</li>
+</ul>
+<div id="qwebr-insertion-location-19"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</section>
+<section id="linear-mixed-models" class="slide level2">
+<h2>Linear (mixed) models</h2>
+<ul>
+<li>ANOVA is a special case of linear (mixed) models</li>
+<li>We can reformulate the F-test using linear (mixed) models framework.</li>
+<li>The benefit of casting it as a linear (mixed) model is that we can more extensively study the relationship between response and covariates.</li>
+<li>But we won’t delve into this today.</li>
+</ul>
+<div id="qwebr-insertion-location-20"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</section>
+<section id="model-diagnostics" class="slide level2">
+<h2>Model diagnostics</h2>
+<div>
+<ul>
+<li class="fragment">When fitting a model, it is important to check the assumptions of the model.</li>
+<li class="fragment">Common model diagnostics include:
+<ul>
+<li class="fragment"><strong>Residual plot</strong> (for checking violations of linearity assumptions, homoscedasticity and more)</li>
+<li class="fragment"><strong>Normal Q-Q plot</strong> (for assessing if residuals are normally distributed)</li>
+<li class="fragment"><strong>Cook’s distance</strong> (for identifying outliers)</li>
+</ul></li>
+<li class="fragment">Occasionally the response may need to be <strong>transformed</strong> (e.g.&nbsp;log, square root) to make the relationship between response and covariates linear.</li>
+<li class="fragment">But it’s beyond the scope of today’s session.</li>
+</ul>
+</div>
 </section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
+<ul>
+<li>Have a <strong>statistical analysis plan</strong> for your experiment.</li>
+<li>Simulate the analysis before running the experiment.</li>
+<li><strong><span class="math inline">t</span>-test</strong> is a common approach to compare two group means.</li>
+<li><strong>ANOVA</strong> can show the decomposition of the total response variation into different sources and compare multiple groups.</li>
+<li>Both <span class="math inline">t</span>-test and ANOVA can be reframed as a linear (mixed) model.</li>
+<li><strong>Linear (mixed) models</strong> can be used to model the relationship between the response and treatment and other peripheral variables.</li>
+<li>When analysing the actual data, be sure to do some model diagnostics (e.g.&nbsp;check assumptions, outliers, etc.)</li>
+</ul>
 
 <div class="quarto-auto-generated-content">
 <p><img src="_extensions/anu-links/anu-light/logo/ANU_ Crest_Gold.png" class="slide-logo"></p>
