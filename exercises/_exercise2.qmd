@@ -12,6 +12,7 @@ webr:
   show-startup-message: false  
   packages: 
     - edibble
+    - tidyverse
 ---
 
 ```{r}
@@ -19,20 +20,70 @@ webr:
 library(webexercises)
 ```
 
+In this exercise, researchers are studying the effect of a new fertilizer compared to no fertilizer on plant growth. They randomly select 80 plants from the same species and assign the two treatments to 40 plants each. The researchers measure the height and number of leaves of the plants after two months to assess the impact of the new fertilizer.
+
+
 #### Study A
 
-Researchers are studying the effect of a new fertilizer on plant growth. They randomly select 50 plants from the same species and divide them into two groups. One group receives the new fertilizer, while the other group receives a standard fertilizer. Over the course of two months, the researchers measure the height and number of leaves of the plants in both groups to assess the impact of the new fertilizer.
+We can specify the above design using `edibble` package in R as below. What do you notice about the treatment allocation? Could this be problematic? Why?
+
 
 ```{webr-r}
+#| autorun: true
 library(edibble)
-des1 <- design("Study A") |> 
-  set_units(plant = 50) |> 
-  set_trts(fertilizer = c("new", "standard")) |>
+desA <- design("Study A") |> 
+  set_units(plant = 80) |> 
+  set_trts(fertilizer = c("new", "none")) |>
   set_rcrds(height = plant, 
             number_of_leaves = plant) |> 
-  allot_table(fertilizer ~ plant)
+  allot_table(fertilizer ~ plant, order = "systematic")
 
-design_anatomy(des1)
+desA
 ```
 
+
 ### Study B
+
+You've been told that the plants are grouped into 4 blocks where each block contains 20 pots. One plant is grown in each pot. The researchers want to make sure that each block has an equal number of plants from each treatment group. They also want to randomize the treatment allocation within each block. How would you design this experiment? Using `tidyverse ` or otherwise, count how many plants are assigned to each treatment group within each block after you have your design layout.
+
+<details><summary>Sample solution</summary>
+
+```{webr-r}
+library(tidyverse)
+desB <- design("Study B") |> 
+  set_units(block = 4,
+            plant = nested_in(block, 20)) |> 
+  set_trts(fertilizer = c("new", "none")) |>
+  set_rcrds(height = plant, 
+            number_of_leaves = plant) |> 
+  allot_table(fertilizer ~ plant, order = "random")
+
+
+desB |> count(block, fertilizer)
+```
+
+</details>
+
+### Study C
+
+You've now been told that the researchers want an additional temperature (standard or high) treatment factor. But they also tell you that they can't change the temperature for each pot. Instead, they can only change the temperature for each block. How would you design this experiment? Using `tidyverse ` or otherwise, get the treatment replications.
+
+
+<details><summary>Sample solution</summary>
+
+```{webr-r}
+desC <- design("Study C") |> 
+  set_units(block = 4,
+            plant = nested_in(block, 20)) |> 
+  set_trts(fertilizer = c("new", "none"),
+           temperature = c("standard", "high")) |>
+  set_rcrds(height = plant, 
+            number_of_leaves = plant) |> 
+  allot_table(fertilizer ~ plant, 
+              temperature ~ block,
+              order = "random")
+
+```
+
+</details>
+

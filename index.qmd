@@ -8,10 +8,7 @@ filters:
 webr: 
   show-startup-message: false    
   packages:
-    - palmerpenguins
     - tidyverse
-    - agridat
-    - medicaldata
     - edibble
 ---
 

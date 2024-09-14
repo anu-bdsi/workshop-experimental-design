@@ -210,6 +210,9 @@ t.test(data1$milk_yield[data1$supp == "new"],
        var.equal = TRUE)
 ```
 
+- <i class="fas fa-exclamation-circle"></i> If there are more than 2 groups, you should not do a pairwise comparison of all groups without adjustment for _multiple comparison_ (not covered today).
+
+
 ## Example: horse skin grafting {background-color="#F5EDDE"}
 
 - Suppose we have an experiment (with ethic approval) to compare 3 different skin grafting methods on 9 horses.

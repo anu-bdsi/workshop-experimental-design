@@ -5078,16 +5078,16 @@ margin: 1em 0;
 <div class="webex-check webex-box">
 <ol type="a">
 <li>Select the sentence that best describes the aim of the study.
-<div id="radio_HIVMECPUUV" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_HIVMECPUUV" value="answer"> <span>Researchers are studying the effect of a new fertilizer on plant growth.</span></label><label><input type="radio" autocomplete="off" name="radio_HIVMECPUUV" value> <span>They randomly select 50 plants from the same species and divide them into two groups.</span></label><label><input type="radio" autocomplete="off" name="radio_HIVMECPUUV" value> <span>One group receives the new fertilizer, while the other group receives a standard fertilizer.</span></label><label><input type="radio" autocomplete="off" name="radio_HIVMECPUUV" value> <span>Over the course of two months, the researchers measure the height and number of leaves of the plants in both groups to assess the impact of the new fertilizer.</span></label>
+<div id="radio_XDPXDPKUWN" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XDPXDPKUWN" value="answer"> <span>Researchers are studying the effect of a new fertilizer on plant growth.</span></label><label><input type="radio" autocomplete="off" name="radio_XDPXDPKUWN" value> <span>They randomly select 50 plants from the same species and divide them into two groups.</span></label><label><input type="radio" autocomplete="off" name="radio_XDPXDPKUWN" value> <span>One group receives the new fertilizer, while the other group receives a standard fertilizer.</span></label><label><input type="radio" autocomplete="off" name="radio_XDPXDPKUWN" value> <span>Over the course of two months, the researchers measure the height and number of leaves of the plants in both groups to assess the impact of the new fertilizer.</span></label>
 </div></li>
 <li>What type of study is this?
-<div id="radio_EGCHQSNISE" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_EGCHQSNISE" value="answer"> <span>Experimental study</span></label><label><input type="radio" autocomplete="off" name="radio_EGCHQSNISE" value> <span>Observational study</span></label>
+<div id="radio_UIORJMNFWI" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_UIORJMNFWI" value="answer"> <span>Experimental study</span></label><label><input type="radio" autocomplete="off" name="radio_UIORJMNFWI" value> <span>Observational study</span></label>
 </div></li>
-<li>What are the treatments or exposures in this study? <select class="webex-select"><option value="blank"></option><option value="answer">Fertilizer type</option><option value>Plant species</option><option value>Plant height</option><option value>Leaves</option><option value>Number of leaves of plant</option><option value>Plants</option></select></li>
-<li>What are the experimental units or subjects in this study? <select class="webex-select"><option value="blank"></option><option value>Fertilizer type</option><option value="answer">Plants</option><option value>Plant species</option><option value>Plant height</option><option value>Leaves</option><option value>Number of leaves of plant</option></select></li>
-<li>What are the response variables in this study? <select class="webex-select"><option value="blank"></option><option value>Leaves</option><option value>Plant species</option><option value>Plants</option><option value>Fertilizer type</option><option value="answer">Number of leaves of plant</option><option value="answer">Plant height</option></select></li>
+<li>What are the treatments or exposures in this study? <select class="webex-select"><option value="blank"></option><option value>Plant species</option><option value>Plant height</option><option value>Leaves</option><option value>Plants</option><option value="answer">Fertilizer type</option><option value>Number of leaves of plant</option></select></li>
+<li>What are the experimental units or subjects in this study? <select class="webex-select"><option value="blank"></option><option value>Leaves</option><option value>Number of leaves of plant</option><option value="answer">Plants</option><option value>Fertilizer type</option><option value>Plant species</option><option value>Plant height</option></select></li>
+<li>What are the response variables in this study? <select class="webex-select"><option value="blank"></option><option value>Leaves</option><option value="answer">Number of leaves of plant</option><option value="answer">Plant height</option><option value>Plant species</option><option value>Fertilizer type</option><option value>Plants</option></select></li>
 <li>What are the observational units in this study? <input class="webex-solveme nospaces ignorecase regex" size="7" data-answer="[&quot;plants?&quot;]"></li>
 <li>Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.</li>
 </ol>
@@ -5101,20 +5101,20 @@ Sample diagram
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-    P0[Plant source] --&gt; P1[50 Plants]
+    P0[Plant source] --&gt; P[50 Plants]
     subgraph Treatments
       direction TB
       F[New fertilizer] 
       S[Standard fertilizer] 
     end 
-    Treatments --&gt; P1
+    Treatments --&gt; P
     subgraph Responses
     H[Plant height]
     L[Number of leaves]
     end
-    P1 --&gt; H
-    P1 --&gt; L
-    Environment[Environment, e.g. sunlight, water, CO2 etc] --&gt; P1
+    P --&gt; H
+    P --&gt; L
+    Environment[Environment, e.g. sunlight, water, CO2 etc] --&gt; P
     M[Measurement device] --&gt; H
     Person[Person] --&gt; M
     style Treatments fill:#fff,stroke:#333,stroke-width:4px
@@ -5134,16 +5134,16 @@ Sample diagram
 <div class="webex-check webex-box">
 <ol type="a">
 <li>Select the sentence that best describes the aim of the study.
-<div id="radio_EVKYSGIWVX" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_EVKYSGIWVX" value="answer"> <span>A group of ecologists wants to study the relationship between sunlight exposure and tree growth in a forest.</span></label><label><input type="radio" autocomplete="off" name="radio_EVKYSGIWVX" value> <span>They observe and measure the height of 100 trees growing in different areas of the forest.</span></label><label><input type="radio" autocomplete="off" name="radio_EVKYSGIWVX" value> <span>Noting how much sunlight each tree receives naturally based on its location.</span></label><label><input type="radio" autocomplete="off" name="radio_EVKYSGIWVX" value> <span>They collect data on tree growth and sunlight exposure to analyze any correlations between the two variables.</span></label>
+<div id="radio_RDMKRHOUAD" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_RDMKRHOUAD" value="answer"> <span>A group of ecologists wants to study the relationship between sunlight exposure and tree growth in a forest.</span></label><label><input type="radio" autocomplete="off" name="radio_RDMKRHOUAD" value> <span>They observe and measure the height of 100 trees growing in different areas of the forest.</span></label><label><input type="radio" autocomplete="off" name="radio_RDMKRHOUAD" value> <span>Noting how much sunlight each tree receives naturally based on its location.</span></label><label><input type="radio" autocomplete="off" name="radio_RDMKRHOUAD" value> <span>They collect data on tree growth and sunlight exposure to analyze any correlations between the two variables.</span></label>
 </div></li>
 <li>What type of study is this?
-<div id="radio_CPBDVOPBZK" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_CPBDVOPBZK" value> <span>Experimental study</span></label><label><input type="radio" autocomplete="off" name="radio_CPBDVOPBZK" value="answer"> <span>Observational study</span></label>
+<div id="radio_FZFZFVXLCH" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_FZFZFVXLCH" value> <span>Experimental study</span></label><label><input type="radio" autocomplete="off" name="radio_FZFZFVXLCH" value="answer"> <span>Observational study</span></label>
 </div></li>
-<li>What are the treatments or exposures in this study? <select class="webex-select"><option value="blank"></option><option value>Tree height</option><option value>Area</option><option value>Trees</option><option value="answer">Sunlight exposure</option></select></li>
-<li>What are the experimental units or subjects in this study? <select class="webex-select"><option value="blank"></option><option value>Sunlight exposure</option><option value="answer">Trees</option><option value>Area</option><option value>Tree height</option></select></li>
-<li>What are the response variables in this study? <select class="webex-select"><option value="blank"></option><option value="answer">Tree height</option><option value>Trees</option><option value>Area</option><option value>Sunlight exposure</option></select></li>
+<li>What are the treatments or exposures in this study? <select class="webex-select"><option value="blank"></option><option value>Trees</option><option value="answer">Sunlight exposure</option><option value>Area</option><option value>Tree height</option></select></li>
+<li>What are the experimental units or subjects in this study? <select class="webex-select"><option value="blank"></option><option value>Tree height</option><option value>Area</option><option value="answer">Trees</option><option value>Sunlight exposure</option></select></li>
+<li>What are the response variables in this study? <select class="webex-select"><option value="blank"></option><option value>Trees</option><option value>Area</option><option value="answer">Tree height</option><option value>Sunlight exposure</option></select></li>
 <li>What are the observational units in this study? <input class="webex-solveme nospaces ignorecase regex" size="6" data-answer="[&quot;trees?&quot;]"></li>
 <li>Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.</li>
 </ol>
@@ -5151,6 +5151,34 @@ Sample diagram
 <summary>
 Sample diagram
 </summary>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    T0[Area] --&gt; T1[100 Trees]
+    subgraph Exposures
+      direction TB
+      S[Sunlight exposure] 
+    end 
+    Exposures --&gt; T1
+    subgraph Responses
+    H[Tree height]
+    end
+    T1 --&gt; H
+    Management --&gt; T1
+    Environment[Other environmental effects, e.g. water, CO2 etc] --&gt; T1
+    M[Measurement device] --&gt; H
+    Person[Person] --&gt; M
+    style Exposures fill:#fff,stroke:#333,stroke-width:4px
+    style Responses fill:#fff,stroke:#333,stroke-width:4px
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </details>
 </div>
 </section>
@@ -5160,16 +5188,16 @@ Sample diagram
 <div class="webex-check webex-box">
 <ol type="a">
 <li>Select the sentence that best describes the aim of the study.
-<div id="radio_JZKWCOPTAN" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_JZKWCOPTAN" value="answer"> <span>A group of epidemiologists is investigating the potential link between physical activity levels and heart disease.</span></label><label><input type="radio" autocomplete="off" name="radio_JZKWCOPTAN" value> <span>They collect data from 1,000 adults by surveying them about their weekly exercise habits and then tracking their health outcomes over the next 10 years.</span></label><label><input type="radio" autocomplete="off" name="radio_JZKWCOPTAN" value> <span>They record the participants physical activity levels and whether or not individuals develop heart disease.</span></label>
+<div id="radio_VEUKFXYDHW" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_VEUKFXYDHW" value="answer"> <span>A group of epidemiologists is investigating the potential link between physical activity levels and heart disease.</span></label><label><input type="radio" autocomplete="off" name="radio_VEUKFXYDHW" value> <span>They collect data from 1,000 adults by surveying them about their weekly exercise habits and then tracking their health outcomes over the next 10 years.</span></label><label><input type="radio" autocomplete="off" name="radio_VEUKFXYDHW" value> <span>They record the participants physical activity levels and whether or not individuals develop heart disease.</span></label>
 </div></li>
 <li>What type of study is this?
-<div id="radio_IOZPNHNLRW" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_IOZPNHNLRW" value> <span>Experimental study</span></label><label><input type="radio" autocomplete="off" name="radio_IOZPNHNLRW" value="answer"> <span>Observational study</span></label>
+<div id="radio_RLGAXPNYBR" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_RLGAXPNYBR" value> <span>Experimental study</span></label><label><input type="radio" autocomplete="off" name="radio_RLGAXPNYBR" value="answer"> <span>Observational study</span></label>
 </div></li>
-<li>What are the treatments or exposures in this study? <select class="webex-select"><option value="blank"></option><option value>Heart disease</option><option value>Adults</option><option value>Epidemiologists</option><option value="answer">Physical activity levels</option></select></li>
-<li>What are the experimental units or subjects in this study? <select class="webex-select"><option value="blank"></option><option value="answer">Adults</option><option value>Heart disease</option><option value>Epidemiologists</option><option value>Physical activity levels</option></select></li>
-<li>What are the response variables in this study? <select class="webex-select"><option value="blank"></option><option value="answer">Heart disease</option><option value>Epidemiologists</option><option value>Adults</option><option value>Physical activity levels</option></select></li>
+<li>What are the treatments or exposures in this study? <select class="webex-select"><option value="blank"></option><option value>Epidemiologists</option><option value="answer">Physical activity levels</option><option value>Adults</option><option value>Heart disease</option></select></li>
+<li>What are the experimental units or subjects in this study? <select class="webex-select"><option value="blank"></option><option value>Heart disease</option><option value>Epidemiologists</option><option value="answer">Adults</option><option value>Physical activity levels</option></select></li>
+<li>What are the response variables in this study? <select class="webex-select"><option value="blank"></option><option value="answer">Heart disease</option><option value>Adults</option><option value>Physical activity levels</option><option value>Epidemiologists</option></select></li>
 <li>What are the observational units in this study? <input class="webex-solveme nospaces ignorecase regex" size="7" data-answer="[&quot;adults?&quot;]"></li>
 <li>Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.</li>
 </ol>
@@ -5177,6 +5205,35 @@ Sample diagram
 <summary>
 Sample diagram
 </summary>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    P0[Adult source] --&gt; P1[1000 Adults]
+    subgraph Exposures
+      direction TB
+      P[Physical activity levels] 
+    end 
+    Exposures --&gt; P1
+    subgraph Responses
+    H[Heart disease]
+    end
+    P1 --&gt; H
+    L[Lifestyle] --&gt; P1
+    Environment --&gt; P1
+    Genetics --&gt; P1
+    Age --&gt; P1
+    Diet --&gt; P1
+    style Exposures fill:#fff,stroke:#333,stroke-width:4px
+    style Responses fill:#fff,stroke:#333,stroke-width:4px
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </details>
 </div>
 </section>
@@ -5186,16 +5243,16 @@ Sample diagram
 <div class="webex-check webex-box">
 <ol type="a">
 <li>Select the sentence that best describes the aim of the study.
-<div id="radio_QWXABWHVTD" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_QWXABWHVTD" value="answer"> <span>A medical researcher is testing the effectiveness of a new drug for treating high blood pressure.</span></label><label><input type="radio" autocomplete="off" name="radio_QWXABWHVTD" value> <span>They recruit 200 patients with hypertension and randomly assign half to receive the new drug, while the other half receive a placebo.</span></label><label><input type="radio" autocomplete="off" name="radio_QWXABWHVTD" value> <span>After three months, the researchers measure the blood pressure of all participants to determine whether the new drug significantly lowers blood pressure compared to the placebo.</span></label>
+<div id="radio_OPUPPZQEKR" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_OPUPPZQEKR" value="answer"> <span>A medical researcher is testing the effectiveness of a new drug for treating high blood pressure.</span></label><label><input type="radio" autocomplete="off" name="radio_OPUPPZQEKR" value> <span>They recruit 200 patients with hypertension and randomly assign half to receive the new drug, while the other half receive a placebo.</span></label><label><input type="radio" autocomplete="off" name="radio_OPUPPZQEKR" value> <span>After three months, the researchers measure the blood pressure of all participants to determine whether the new drug significantly lowers blood pressure compared to the placebo.</span></label>
 </div></li>
 <li>What type of study is this?
-<div id="radio_LOZJAFBYKH" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_LOZJAFBYKH" value="answer"> <span>Experimental study</span></label><label><input type="radio" autocomplete="off" name="radio_LOZJAFBYKH" value> <span>Observational study</span></label>
+<div id="radio_WLRWEAWSLG" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_WLRWEAWSLG" value="answer"> <span>Experimental study</span></label><label><input type="radio" autocomplete="off" name="radio_WLRWEAWSLG" value> <span>Observational study</span></label>
 </div></li>
-<li>What are the treatments or exposures in this study? <select class="webex-select"><option value="blank"></option><option value="answer">Drug</option><option value>Blood pressure</option><option value>Medical researcher</option><option value="answer">Placebo</option><option value>Patients</option></select></li>
-<li>What are the experimental units or subjects in this study? <select class="webex-select"><option value="blank"></option><option value>Blood pressure</option><option value>Drug</option><option value>Placebo</option><option value="answer">Patients</option><option value>Medical researcher</option></select></li>
-<li>What are the response variables in this study? <select class="webex-select"><option value="blank"></option><option value>Drug</option><option value>Patients</option><option value>Placebo</option><option value="answer">Blood pressure</option><option value>Medical researcher</option></select></li>
+<li>What are the treatments or exposures in this study? <select class="webex-select"><option value="blank"></option><option value="answer">Drug</option><option value>Patients</option><option value>Medical researcher</option><option value="answer">Placebo</option><option value>Blood pressure</option></select></li>
+<li>What are the experimental units or subjects in this study? <select class="webex-select"><option value="blank"></option><option value="answer">Patients</option><option value>Medical researcher</option><option value>Placebo</option><option value>Blood pressure</option><option value>Drug</option></select></li>
+<li>What are the response variables in this study? <select class="webex-select"><option value="blank"></option><option value>Patients</option><option value>Placebo</option><option value>Medical researcher</option><option value>Drug</option><option value="answer">Blood pressure</option></select></li>
 <li>What are the observational units in this study? <input class="webex-solveme nospaces ignorecase regex" size="9" data-answer="[&quot;patients?&quot;]"></li>
 <li>Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.</li>
 </ol>
@@ -5203,6 +5260,36 @@ Sample diagram
 <summary>
 Sample diagram
 </summary>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    P1[200 Patients]
+    subgraph Treatments
+      direction TB
+      D[Drug] 
+      P[Placebo]
+    end 
+    Treatments --&gt; P1
+    subgraph Responses
+    B[Blood pressure]
+    end
+    P1 --&gt; B
+    L[Lifestyle] --&gt; P1
+    Environment --&gt; P1
+    Genetics --&gt; P1
+    Age --&gt; P1
+    Diet --&gt; P1
+    style Treatments fill:#fff,stroke:#333,stroke-width:4px
+    style Responses fill:#fff,stroke:#333,stroke-width:4px
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </details>
 </div>
 </section>
@@ -5212,16 +5299,16 @@ Sample diagram
 <div class="webex-check webex-box">
 <ol type="a">
 <li>Select the sentence that best describes the aim of the study.
-<div id="radio_OLETALQWQG" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_OLETALQWQG" value> <span>A biologist is studying the effect of different water temperatures on fish growth.</span></label><label><input type="radio" autocomplete="off" name="radio_OLETALQWQG" value="answer"> <span>They select 100 fish and randomly assign them to two tanks: one with water kept at 15°C and the other at 25°C.</span></label><label><input type="radio" autocomplete="off" name="radio_OLETALQWQG" value> <span>Over the course of a month, the researcher measures the weight gain of each fish in both tanks to assess how water temperature affects growth.</span></label>
+<div id="radio_ZSTUFDEMBE" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ZSTUFDEMBE" value> <span>A biologist is studying the effect of different water temperatures on fish growth.</span></label><label><input type="radio" autocomplete="off" name="radio_ZSTUFDEMBE" value="answer"> <span>They select 100 fish and randomly assign them to two tanks: one with water kept at 15°C and the other at 25°C.</span></label><label><input type="radio" autocomplete="off" name="radio_ZSTUFDEMBE" value> <span>Over the course of a month, the researcher measures the weight gain of each fish in both tanks to assess how water temperature affects growth.</span></label>
 </div></li>
 <li>What type of study is this?
-<div id="radio_SNKENQSHAY" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_SNKENQSHAY" value="answer"> <span>Experimental study</span></label><label><input type="radio" autocomplete="off" name="radio_SNKENQSHAY" value> <span>Observational study</span></label>
+<div id="radio_LASAMMRTLF" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_LASAMMRTLF" value="answer"> <span>Experimental study</span></label><label><input type="radio" autocomplete="off" name="radio_LASAMMRTLF" value> <span>Observational study</span></label>
 </div></li>
-<li>What are the treatments or exposures in this study? <select class="webex-select"><option value="blank"></option><option value="answer">Water temperature</option><option value>Fish</option><option value>Tanks</option><option value>Biologist</option><option value>Weight gain</option></select></li>
-<li>What are the experimental units or subjects in this study? <select class="webex-select"><option value="blank"></option><option value>Weight gain</option><option value>Biologist</option><option value="answer">Tanks</option><option value>Water temperature</option><option value>Fish</option></select></li>
-<li>What are the response variables in this study? <select class="webex-select"><option value="blank"></option><option value>Biologist</option><option value>Water temperature</option><option value>Tanks</option><option value="answer">Weight gain</option><option value>Fish</option></select></li>
+<li>What are the treatments or exposures in this study? <select class="webex-select"><option value="blank"></option><option value>Weight gain</option><option value="answer">Water temperature</option><option value>Tanks</option><option value>Fish</option><option value>Biologist</option></select></li>
+<li>What are the experimental units or subjects in this study? <select class="webex-select"><option value="blank"></option><option value="answer">Tanks</option><option value>Fish</option><option value>Biologist</option><option value>Weight gain</option><option value>Water temperature</option></select></li>
+<li>What are the response variables in this study? <select class="webex-select"><option value="blank"></option><option value="answer">Weight gain</option><option value>Biologist</option><option value>Water temperature</option><option value>Fish</option><option value>Tanks</option></select></li>
 <li>What are the observational units in this study? <input class="webex-solveme nospaces ignorecase regex" size="8" data-answer="[&quot;fishe?s?&quot;]"></li>
 <li>Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.</li>
 </ol>
@@ -5229,6 +5316,35 @@ Sample diagram
 <summary>
 Sample diagram
 </summary>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    P1[100 Fish]
+    subgraph Treatments
+      direction TB
+      W15[Water 15 Celsius degrees] 
+      W25[Water 25 Celsius degrees]
+    end 
+    Treatments --&gt; Tank
+    subgraph Responses
+    WG[Weight gain]
+    end
+    P1 --&gt; WG
+    Environment --&gt; Tank
+    F[Fish source] --&gt; P1
+    Tank --&gt; P1
+    Diet --&gt; Tank
+    style Treatments fill:#fff,stroke:#333,stroke-width:4px
+    style Responses fill:#fff,stroke:#333,stroke-width:4px
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </details>
 </div>
 </section>

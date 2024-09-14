@@ -6,9 +6,71 @@ format:
       - ../assets/webex.css
     include-after-body: 
       - ../assets/webex.js
+filters:
+  - webr2
+webr: 
+  show-startup-message: false  
+  packages: 
+    - edibble
+    - tidyverse
+    - broom
 ---
 
 ```{r}
 #| include: false
 library(webexercises)
 ```
+
+In this exercise, consider Study C from Exercise 2. This time though consider what your statistical analysis plan may be. Simulate some response data and perform the actual analysis from your plan on this simulated data.
+
+
+<details><summary>Sample solution</summary>
+
+In this sample solution, we are going to use the `edibble` R package to design the experiment and simulate some response data.
+
+
+```{webr-r}
+#| autorun: true
+library(edibble)
+dataC <- design("Study C") |> 
+  set_units(block = 4,
+            plant = nested_in(block, 20)) |> 
+  set_trts(fertilizer = c("new", "none"),
+           temperature = c("standard", "high")) |>
+  set_rcrds(height = plant, 
+            number_of_leaves = plant) |> 
+  allot_table(fertilizer ~ plant, 
+              temperature ~ block,
+              order = "random") |> 
+  expect_rcrds(height >= 0.1,
+               number_of_leaves >= 1L) |> 
+  autofill_rcrds()
+
+dataC
+```
+
+- We'll analyse each response variable separately using ANOVA.
+
+```{webr-r}
+summary(aov(number_of_leaves ~ fertilizer * temperature + Error(block), data = dataC))
+```
+
+```{webr-r}
+summary(aov(height ~ fertilizer * temperature + Error(block), data = dataC))
+```
+
+- We can actually peak the "truth" by looking at the simulation process using `examine_process()`. The line that starts with `y <-` shows how the response was generated. Every response has the so-called plant effects, but check what other effects was included. Does it match up with what is statistical significant from your ANOVA 
+
+```{webr-r}
+examine_process(dataC)
+```
+
+- While you have to becareful to build models with proper context and perform model diagnostic, you can check the suggested baseline model using `design_model()`.
+
+```{webr-r}
+design_model(dataC)
+```
+
+
+
+</details>
