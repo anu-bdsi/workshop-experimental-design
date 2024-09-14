@@ -22,6 +22,7 @@ webr:
   show-startup-message: false  
   packages: 
     - edibble
+    - broom
 ---
 
 
@@ -46,16 +47,22 @@ learning_objectives(4:5)
 
 - Analysis of experimental data depends on various context. 
 - <i class="fas fa-exclamation-circle"></i> We cannot cover all types of analysis in a short period!
-- We'll cover **two-sample tests**, **linear regression** and analysis of variance (**ANOVA**) for some types of experimental data.
-- Two-sample tests and ANOVA can be in fact just formulated as a linear regression.
+- We briefly cover 
+  - **two-sample $t$-test**, 
+  - **linear model** and 
+  - analysis of variance (**ANOVA**) for some types of experimental data.
+- Two-sample $t$-test and ANOVA can be in fact just formulated as a linear (mixed) model.
 
 :::
 
 ## Completely randomised design 
 
+- Let's suppose we have a completely randomised design as below.
+
 ```{webr-r}
+#| autorun: true
 library(edibble)
-des1 <- design("CRD Cow Experiment") |> 
+des1 <- design("CRD Cow Experiment", .seed = 1) |> 
   set_units(cow = 6) |> 
   set_trts(supp = c("new", "control")) |> 
   allot_table(supp ~ cow)
@@ -67,57 +74,273 @@ des1
 
 ## Simulate the experimental data
 
+- You can simulate in various way -  we are going to use a lazy approach using `autofill_rcrds` from the `edibble` R package
+
 ```{webr-r}
+#| autorun: true
 data1 <- des1 |> 
   set_rcrds(milk_yield = cow) |> 
-  simulate_process(milk_yield = function(diff = 1) {
-      effects <- c(new = diff, control = 0)
-      rnorm(n(), 5 + effects[supp], 1) 
-  }) |> 
-  simulate_rcrds(milk_yield = with_params(diff = 5))
+  expect_rcrds(milk_yield >= 1) |> 
+  autofill_rcrds(.seed = 10) # a lazy-person's simulation
+# note that milk yield simulated is _not_ meaningful here 
+# but just gives you data to simulate an analysis before the real experiment
+data1 
 ```
 
+## Comparing two samples
+
+- Suppose we have two _independent_ samples like below.
+
+::: columns
 
 
-## Statistical analysis plan
-
-::: f2
-
-**Analysis of variance**
-
-```{r}
-#| eval: false
-options(knitr.kable.NA = '')
-anova(lm(Weight ~ Treatment + Glasshouse, data = df10v4)) |> 
-  knitr::kable(digits = 3)
+::: {.column width="50%"}
+- Milk yield for the _control supplement_:
+```{webr-r}
+#| autorun: true
+y1 <- data1$milk_yield[data1$supp == "control"]
+y1
 ```
+- And its corresponding average:
+```{webr-r}
+#| autorun: true
+mean(y1)
+```
+- And sample standard deviation:
+```{webr-r}
+#| autorun: true
+sd(y1)
+```
+:::
 
-**Estimated regression parameters**
+::: {.column width="50%"}
 
-```{r}
-#| eval: false
-summary(lm(Weight ~ Treatment + Glasshouse, data = df10v4)) |> 
-  broom::tidy() |> 
-  mutate(Term = c("Intercept", "Treatment", "Glasshouse")) |> 
-  select(Term, Estimate = estimate, `Std Error` = std.error, `P value` = p.value) |> 
-  knitr::kable(digits = 3)
+- Milk yield for the _new supplement_:
+```{webr-r}
+#| autorun: true
+y2 <- data1$milk_yield[data1$supp == "new"]
+y2
+```
+- And its corresponding average:
+```{webr-r}
+#| autorun: true
+mean(y2)
+```
+- And sample standard deviation:
+```{webr-r}
+#| autorun: true
+sd(y2)
 ```
 
 :::
 
-## Analysis of variance (ANOVA)
+:::
 
 
-## Linear models 
 
-- ANOVA is a special case of linear models
+## Two-sample $t$-test
 
-## Common diagnostics 
+- Is the average milk yield using the new supplement $(\bar{y}_2)$ significantly greater than the average milk yield using the control supplement $(\bar{y}_1)$?
 
-- Check the residual plot 
-- Outliers 
-- Transformation of data
-- Multiple comparisons 
+```{webr-r}
+t.test(y2, y1, alternative = "greater")
+```
+
+. . . 
+
+<details>
+- Suppose that we have two groups $Y_1 \sim N(\mu_1, \sigma_1^2)$ and $Y_2 \sim N(\mu_2, \sigma_2^2)$ with $n_1$ and $n_2$ observations from each group, respectively.
+- $H_0: \mu_1 = \mu_2$ vs $H_1: \mu_1 < \mu_2$
+- $t = \frac{\bar{y}_2 - \bar{y}_1}{s_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}$ where $s_p = \sqrt{\frac{s_1^2(n_1 - 1)+s_2^2(n_2 - 1)}{n_1 + n_2 - 2}}$ is the pooled standard deviation and $\bar{y}_k$ and $s_k$ is the sample mean and sample standard deviation, respectively, for the $k$-th group.
+- $p$-value is $P(t_{n_1+n_2 - 2} \geq t)$ where $t_{n_1+n_2 - 2}$ is a $t$-distribution with $n_1 + n_2 - 2$ degrees of freedom.
+</details>
+- Low $p$-value (usually $<0.05$) indicates evidence that the new supplement provides a signficantly higher milk yield.
+
+
+
+## Paired observations
+
+```{webr-r}
+#| autorun: true
+data2 <- design("Paired observations") |> 
+  set_units(cow = 3, 
+            period = 2, 
+            observation = crossed_by(period, cow)) |> 
+  set_trts(supp = c("new", "control")) |> 
+  allot_table(supp ~ observation) |> 
+  set_rcrds(milk_yield = observation) |> 
+  expect_rcrds(milk_yield >= 1) |> 
+  autofill_rcrds()
+  
+data2
+```
+
+## Paired $t$-test
+
+- A paired $t$-test is the same as the one-sample $t$-test for the differences between the paired observations.
+
+```{webr-r}
+y1 <- data2$milk_yield[data2$supp == "control"]
+y2 <- data2$milk_yield[data2$supp == "new"]
+
+t.test(y2, y1, alternative = "greater") # this is _wrong_ to use for paired observations!
+t.test(y2, y1, alternative = "greater", paired = TRUE) 
+t.test(y2 - y1, alternative = "greater") # this one-sided t-test is the same as paired t-test!
+```
+
+<details>
+- Suppose that we have $n$ paired observations and $Y_d \sim N(\mu_d, \sigma^2_d)$.
+- $H_0: \mu_d = 0$ vs $H_1: \mu_d > 0$
+- $t = \frac{\bar{y}_2 - \bar{y}_1}{s_d\sqrt{\frac{2}{n}}}$ where $s_d$ is the sample standard deviation of the differences between paired observations.
+- $p$-value is $P(t_{2n - 1} \geq t)$.
+</details>
+
+## Two-sample $t$-test as linear regression 
+
+```{webr-r}
+#| autorun: true
+broom::tidy(lm(milk_yield ~ supp, data = data1))
+```
+
+- The $t$-statistic above for the `suppnew` is the same as the $t$-statistic from the two-sample $t$-test below.
+```{webr-r}
+t.test(data1$milk_yield[data1$supp == "new"],
+       data1$milk_yield[data1$supp == "control"], 
+       alternative = "two.sided",
+       var.equal = TRUE)
+```
+
+## Example: horse skin grafting {background-color="#F5EDDE"}
+
+- Suppose we have an experiment (with ethic approval) to compare 3 different skin grafting methods on 9 horses.
+- The grafting method is independently applied to each horse.
+- The skin is cut into 6 pieces and thickness is measured for each skin piece.
+
+. . . 
+
+
+
+```{webr-r}
+#| autorun: true
+des_grafting <- design("Grafting for horses") |> 
+  set_units(horse = 9, 
+            skin_piece = nested_in(horse, 6)) |> 
+  set_trts(graft_method = c("A", "B", "C")) |> 
+  set_rcrds(skin_thickness = skin_piece) |> 
+  expect_rcrds(skin_thickness >= 0.1) |> 
+  allot_table(graft_method ~ horse)
+```
+
+. . . 
+
+- Let's simulate the data.
+
+```{webr-r}
+#| autorun: true
+data_grafting <- autofill_rcrds(des_grafting)
+```
+
+## Statistical analysis plan
+
+::: incremental
+
+- A **statistical analysis plan** (SAP) outlines the statistical methods that will be used for analyzing the data.
+- It is good practice to have SAP written before the data collection (and required for some fields, e.g. clinical trials).
+- But what model should we use for the horse skin grafting data?
+
+:::
+
+. . . 
+
+```{webr-r}
+#| autorun: true
+m_g <- lm(skin_thickness ~ graft_method, data = data_grafting)
+m_gh <- lm(skin_thickness ~ graft_method + horse, data = data_grafting)
+m_hg <- lm(skin_thickness ~ horse + graft_method, data = data_grafting)
+m_geh <- aov(skin_thickness ~ graft_method + Error(horse), data = data_grafting)
+```
+
+. . . 
+
+- In principle, all treaments (`graft_method`) and blocking factors (`horse`) in the design should be included in the model.
+- Blocking factors are generally assumed to have no interaction effect with the treatment. 
+
+
+
+## Analysis of variance (ANOVA) table
+
+- ANOVA table show the decomposition of the total variance into different sources of variation.
+
+```{webr-r}
+#| autorun: true
+anova(m_gh) 
+```
+
+## ANOVA mathematically
+
+::: f2
+
+- Suppose that $y_{ij}$ is the measured thickness for the $j$-th skin piece of the $i$-th horse for $i = 1, ..., 9$ and $j = 1, ..., 6$.
+- Total sum of squares ($\text{Total SS}$) is $\sum_{i=1}^9 \sum_{j=1}^6 (y_{ij} - \bar{y})^2$ where $\bar{y}$ is the overall mean.
+- Treatment (grafting method) sum of squares ($\text{Treatment SS}$) is $$18 \times \sum_{k\in \{A, B, C\}} \left(\frac{1}{18}\sum_{i\in\mathcal{T}(k)} \sum_{j=1}^6y_{ij} - \bar{y}\right)^2$$ where $\mathcal{T}(k)$ is the set of (three) horses that received treatment $k$.
+- Experimental unit (horse) residual sum of squares ($\text{EU Residual SS}$) is $$6 \times \sum_{i=1}^9 \left(\frac{1}{6}\sum_{j=1}^6 y_{ij} - \bar{y}\right)^2 - \text{Treatment SS}.$$
+- Residual sum of squares ($\text{Residual SS}$) is $\text{Total SS} - \text{Treatment SS} - \text{EU Residual SS}$.
+- The mean square values are obtained by dividing the sum of squares by the corresponding degrees of freedom.
+- The F-value is given by mean square value divided by mean square of residual.
+
+:::
+
+## F-test
+
+- ANOVA can be used to compare means of more than two groups.
+
+```{webr-r}
+anova(m_g) # missing variation due to horse
+anova(m_gh) # pseudoreplication!!!
+anova(m_hg) # order of terms in the model matter
+```
+- The most apprororpiate analysis for testing the treatment effect is to compare the corresponding mean square value with the _experimental unit residual mean square_ value.
+
+```{webr-r}
+#| autorun: true
+summary(m_geh) 
+```
+
+
+
+## Linear (mixed) models 
+
+- ANOVA is a special case of linear (mixed) models
+- We can reformulate the F-test using linear (mixed) models framework.
+- The benefit of casting it as a linear (mixed) model is that we can more extensively study the relationship between response and covariates.
+- But we won't delve into this today.
+
+```{webr-r}
+#| autorun: true
+anova(m_g, m_gh)
+```
+
+
+## Model diagnostics 
+
+::: incremental
+
+- When fitting a model, it is important to check the assumptions of the model.
+- Common model diagnostics include:
+  - **Residual plot** (for checking violations of linearity assumptions, homoscedasticity and more)
+  - **Normal Q-Q plot** (for assessing if residuals are normally distributed)
+  - **Cook's distance** (for identifying outliers)
+- Occasionally the response may need to be **transformed** (e.g. log, square root) to make the relationship between response and covariates linear.
+- But it's beyond the scope of today's session.
+
+:::
 
 ## Summary 
 
+- Have a **statistical analysis plan** for your experiment.
+- Simulate the analysis before running the experiment.
+- **$t$-test** is a common approach to compare two group means.
+- **ANOVA** can show the decomposition of the total response variation into different sources and compare multiple groups.
+- Both $t$-test and ANOVA can be reframed as a linear (mixed) model.
+- **Linear (mixed) models** can be used to model the relationship between the response and treatment and other peripheral variables.
+- When analysing the actual data, be sure to do some model diagnostics (e.g. check assumptions, outliers, etc.)
