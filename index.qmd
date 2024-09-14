@@ -40,7 +40,7 @@ Please ensure that you download and install
 - the following packages by opening RStudio Desktop or Positron, then copy and paste the command below in the Console section, pushing Enter after pasting.
 
 ```r
-install.packages(c("edibble", "agridat", "tidyverse"))
+install.packages(c("edibble", "broom"))
 ```
 
 - For Window users, you may need to [install Rtools](https://cran.r-project.org/bin/windows/Rtools/) to install R packages.
