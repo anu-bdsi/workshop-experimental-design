@@ -28,7 +28,7 @@ Upon completion of this workshop, participants should be able to:
 {{< include slides/_learning-objectives.qmd >}}
 
 
-## 🔧 Preperation 
+## 🔧 Preparation 
 
 Please ensure that you download and install 
 
