@@ -44,15 +44,10 @@ install.packages(c("edibble", "broom"))
 
 
 
-## Materials 
-
 
 ```{r setup, include = FALSE}
 library(webexercises)
-library(lubridate)
 library(tidyverse)
-library(agridat)
-library(medicaldata)
 ex_tabset <- function(id) {
   paste0("[<i class='fas fa-pen-square'></i> Self test with Exercise ", id, "](#tabset-1-", id, "-tab){onclick=",
          'document.getElementById(', "'tabset-1-", id, "-tab').click();",
@@ -78,10 +73,10 @@ checklist <- function(x) {
 
 ```
 
-[![](images/by-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)
-
 
 ## 🕙 Slides
+
+[![](images/by-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)
 
 Click on the heading to open the slides in a new tab, or click on details to see the slides on this page.
 
