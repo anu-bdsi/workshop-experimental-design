@@ -74,7 +74,7 @@ checklist <- function(x) {
 ```
 
 
-## 🕙 Slides
+## 📚 Slides
 
 [![](images/by-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)
 
