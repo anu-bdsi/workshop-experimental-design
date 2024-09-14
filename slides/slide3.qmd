@@ -74,7 +74,7 @@ des1
 
 ## Simulate the experimental data
 
-- You can simulate in various way -  we are going to use a lazy approach using `autofill_rcrds` from the `edibble` R package
+- You can simulate in various ways -  we are going to use a lazy approach using `autofill_rcrds` from the `edibble` R package
 
 ```{webr-r}
 #| autorun: true
