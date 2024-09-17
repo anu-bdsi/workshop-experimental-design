@@ -1,0 +1,91 @@
+---
+format: pdf
+---
+
+
+#### Study 1
+
+Researchers are studying the effect of a new fertilizer on plant growth. They randomly select 50 plants from the same species and divide them into two groups. One group receives the new fertilizer, while the other group receives a standard fertilizer. Over the course of two months, the researchers measure the height and number of leaves of the plants in both groups to assess the impact of the new fertilizer.
+
+a) What is the aim of the study?
+a) What type of study is this? Experimental or observational?
+b) What are the treatments or exposures in this study?
+c) What are the experimental units or subjects in this study? 
+d) What are the response variables in this study? 
+e) What are the observational units in this study? 
+g) Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.
+a) Can the study objective can be better framed? Do the treatments/exposures and response variables address the objective?
+
+
+\newpage
+
+#### Study 2 
+
+A group of ecologists wants to study the relationship between sunlight exposure and tree growth in a forest. They observe and measure the height of 100 trees growing in different areas of the forest, noting how much sunlight each tree receives naturally based on its location. They collect data on tree growth and sunlight exposure to analyze any correlations between the two variables.
+
+
+
+a) What is the aim of the study?
+a) What type of study is this? Experimental or observational?
+b) What are the treatments or exposures in this study?
+c) What are the experimental units or subjects in this study?
+d) What are the response variables in this study? 
+e) What are the observational units in this study?
+g) Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.
+a) Can the study objective can be better framed? Do the treatments/exposures and response variables address the objective?
+
+
+\newpage
+
+
+#### Study 3
+
+A group of epidemiologists is investigating the potential link between physical activity levels and heart disease. They collect data from 1,000 adults by surveying them about their weekly exercise habits and then tracking their health outcomes over the next 10 years. They record the participants physical activity levels and whether or not individuals develop heart disease.
+
+
+
+a) What is the aim of the study?
+a) What type of study is this? Experimental or observational?
+b) What are the treatments or exposures in this study? 
+c) What are the experimental units or subjects in this study? 
+d) What are the response variables in this study? 
+e) What are the observational units in this study? 
+g) Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.
+a) Can the study objective can be better framed? Do the treatments/exposures and response variables address the objective?
+
+
+\newpage
+
+
+
+#### Study 4
+
+A medical researcher is testing the effectiveness of a new drug for treating high blood pressure. They recruit 200 patients with hypertension and randomly assign half to receive the new drug, while the other half receive a placebo. After three months, the researchers measure the blood pressure of all participants to determine whether the new drug significantly lowers blood pressure compared to the placebo.
+
+
+a) What is the aim of the study?
+a) What type of study is this? Experimental or observational?
+b) What are the treatments or exposures in this study? 
+c) What are the experimental units or subjects in this study? 
+d) What are the response variables in this study?
+e) What are the observational units in this study? 
+g) Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.
+a) Can the study objective can be better framed? Do the treatments/exposures and response variables address the objective?
+
+
+\newpage
+
+
+#### Study 5
+
+A biologist is studying the effect of different water temperatures on fish growth. They select 100 fish and randomly assign them to two tanks: one with water kept at 15°C and the other at 25°C. Over the course of a month, the researcher measures the weight gain of each fish in both tanks to assess how water temperature affects growth.
+
+
+a) What is the aim of the study?
+a) What type of study is this? Experimental or observational?
+b) What are the treatments or exposures in this study? 
+c) What are the experimental units or subjects in this study? 
+d) What are the response variables in this study? 
+e) What are the observational units in this study? 
+g) Draw a causal diagram for this study to brainstorm the potential sources that could affect the outcome.
+a) Can the study objective can be better framed? Do the treatments/exposures and response variables address the objective?
