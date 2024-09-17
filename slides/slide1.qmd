@@ -671,6 +671,8 @@ _**Question**: Does regular exposure to red LED light enhances the growth of tom
 
 > Researchers are studying the impact of a new irrigation method on tomato growth. They randomly select 40 plants of the same species and divide them into two groups. One group is watered using the new irrigation technique, while the other group is watered using a traditional method. The researchers record the dry weight of each tomato at harvest.
 
+. . . 
+
 - **Aim**: To assess the new irrigation method on tomato growth.<br> [<i class="fas fa-exclamation-circle"></i> This aim should be more specific in practice.]{style="color:grey;"}
 - **Response**: Dry weight of individual tomatoes at harvest.
 - **Treatments**: New irrigation method vs. traditional method.
