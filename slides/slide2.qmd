@@ -468,7 +468,7 @@ Statistical anatomy of the experiment:
 - What could go wrong with this?
 - The order of the experimental units may be **_confounded_** with some extraneous factor
 - Like say, the order of the experimental units was determined by the speed (fast to slow) of the cow to get to the feed
-- This means that the more active cows are given <img src='/images/supplement1.png' style='height:1em'> and leasat active ones are given <img src='/images/supplement2.png' style='height:1em'> 
+- This means that the more active cows are given <img src='/images/supplement1.png' style='height:1em'> and least active ones are given <img src='/images/supplement2.png' style='height:1em'> 
 
 :::
 
