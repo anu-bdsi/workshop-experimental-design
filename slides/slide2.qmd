@@ -754,7 +754,7 @@ des1
 
 ## Design anatomy
 
-- Design anatomy shows the breakdown of degrees of freedom across different sources of variation (related to _skeletonal ANOVA_)
+- Design anatomy shows the breakdown of degrees of freedom across different sources of variation (related to _skeleton ANOVA_)
 
 ```{webr-r}
 design_anatomy(des3)
