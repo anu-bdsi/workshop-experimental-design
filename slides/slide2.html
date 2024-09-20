@@ -10,7 +10,7 @@
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
 <link href="../site_libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.5.31">
+  <meta name="generator" content="quarto-1.5.30">
 
   <meta name="author" content="Emi Tanaka">
   <title>ANU BDSI – Principles of experimental designs</title>
@@ -492,7 +492,7 @@
   };
 
   // Store cell data
-  globalThis.qwebrCellDetails = [{"id":1,"code":"library(edibble)\nset.seed(1) # to replicate the result \ndesign(\"Randomised complete block design\") |> \n  set_units(pen = 3, \n            cow = nested_in(pen, 2)) |> \n  set_trts(supplement = c(\"new\", \"control\")) |> \n  allot_table(supplement ~ cow, order = \"random\")","options":{"context":"interactive","output":"true","fig-cap":"","fig-height":5,"classes":"","read-only":"false","out-height":"","results":"markup","fig-width":7,"label":"unnamed-chunk-1","out-width":"700px","warning":"true","autorun":"false","echo":"true","message":"true","dpi":72,"comment":""}},{"id":2,"code":"library(edibble)\ntrt_str <- set_trts(fertilizer = c(\"A\", \"B\"),\n                    water = c(\"irrigate\", \"rainfed\"))\nunit_str1 <- set_units(plot = 12)\nunit_str2 <- set_units(strip = 6,\n                       plot = nested_in(strip, 2))\n\ndes1 <- (unit_str1 + trt_str) |> allot_table(fertilizer ~ plot, water ~ plot)\ndes2 <- (unit_str1 + trt_str) |> allot_table(fertilizer:water ~ plot)\ndes3 <- (unit_str2 + trt_str) |> allot_table(fertilizer:water ~ plot)\n\ndes1","options":{"context":"interactive","output":"true","fig-cap":"","fig-height":5,"classes":"","read-only":"false","out-height":"","results":"markup","fig-width":7,"label":"unnamed-chunk-2","out-width":"700px","warning":"true","autorun":"false","echo":"true","message":"true","dpi":72,"comment":""}},{"id":3,"code":"design_anatomy(des3)","options":{"read-only":"false","classes":"","out-height":"","results":"markup","context":"interactive","output":"true","label":"unnamed-chunk-3","out-width":"700px","fig-height":5,"comment":"","fig-width":7,"dpi":72,"fig-cap":"","message":"true","warning":"true","autorun":"false"}},{"id":4,"code":"library(edibble)\ndes_invalid <- design(\"Invalid design\") |> \n  set_units(pen = 2, \n            cow = nested_in(pen, 3)) |> \n  set_trts(supp = c(\"new\", \"control\")) |> \n  allot_table(supp ~ pen)\n\ndesign_anatomy(des_invalid)","options":{"read-only":"false","classes":"","out-height":"","results":"markup","context":"interactive","output":"true","label":"unnamed-chunk-4","out-width":"700px","fig-height":5,"comment":"","fig-width":7,"dpi":72,"fig-cap":"","message":"true","warning":"true","autorun":"false"}}];
+  globalThis.qwebrCellDetails = [{"id":1,"code":"library(edibble)\nset.seed(1) # to replicate the result \ndesign(\"Randomised complete block design\") |> \n  set_units(pen = 3, \n            cow = nested_in(pen, 2)) |> \n  set_trts(supplement = c(\"new\", \"control\")) |> \n  allot_table(supplement ~ cow, order = \"random\")","options":{"comment":"","fig-cap":"","results":"markup","warning":"true","dpi":72,"context":"interactive","fig-height":5,"out-height":"","fig-width":7,"out-width":"700px","read-only":"false","classes":"","echo":"true","message":"true","autorun":"false","output":"true","label":"unnamed-chunk-1"}},{"id":2,"code":"library(edibble)\ntrt_str <- set_trts(fertilizer = c(\"A\", \"B\"),\n                    water = c(\"irrigate\", \"rainfed\"))\nunit_str1 <- set_units(plot = 12)\nunit_str2 <- set_units(strip = 6,\n                       plot = nested_in(strip, 2))\n\ndes1 <- (unit_str1 + trt_str) |> allot_table(fertilizer ~ plot, water ~ plot)\ndes2 <- (unit_str1 + trt_str) |> allot_table(fertilizer:water ~ plot)\ndes3 <- (unit_str2 + trt_str) |> allot_table(fertilizer:water ~ plot)\n\ndes1","options":{"comment":"","fig-cap":"","results":"markup","warning":"true","dpi":72,"context":"interactive","fig-height":5,"out-height":"","fig-width":7,"out-width":"700px","read-only":"false","classes":"","echo":"true","message":"true","autorun":"true","output":"true","label":"unnamed-chunk-2"}},{"id":3,"code":"design_anatomy(des3)","options":{"comment":"","fig-cap":"","results":"markup","read-only":"false","classes":"","warning":"true","out-width":"700px","label":"unnamed-chunk-3","message":"true","autorun":"true","dpi":72,"context":"interactive","fig-width":7,"fig-height":5,"output":"true","out-height":""}},{"id":4,"code":"library(edibble)\ndes_invalid <- design(\"Invalid design\") |> \n  set_units(pen = 2, \n            cow = nested_in(pen, 3)) |> \n  set_trts(supp = c(\"new\", \"control\")) |> \n  allot_table(supp ~ pen)\n\ndesign_anatomy(des_invalid)","options":{"comment":"","fig-cap":"","results":"markup","read-only":"false","classes":"","warning":"true","out-width":"700px","label":"unnamed-chunk-4","message":"true","autorun":"true","dpi":72,"context":"interactive","fig-width":7,"fig-height":5,"output":"true","out-height":""}}];
 
   </script>
   <script type="module">
@@ -2049,18 +2049,16 @@ Emi Tanaka
 </section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
-<div>
 <ul>
-<li class="fragment">Remember the basic design principles: controls, replication, blocking, and randomisaton.</li>
-<li class="fragment">Use blinding where applicable to reduce experimental bias.</li>
-<li class="fragment">Randomisation is like buying an insurance (but free!).</li>
-<li class="fragment">Randomisation helps to protect you from unknown confounding factors.</li>
-<li class="fragment">Block what you can, randomise what you cannot.</li>
-<li class="fragment">Watch out for pseudoreplication!</li>
-<li class="fragment">Randomise using a computer program if possible.</li>
-<li class="fragment">Produce a design anatomy to see the spread of the degrees of freedom across sources of variation.</li>
+<li>Remember the basic design principles: controls, replication, blocking, and randomisaton.</li>
+<li>Use blinding where applicable to reduce experimental bias.</li>
+<li>Randomisation is like buying an insurance (but free!).</li>
+<li>Randomisation helps to protect you from unknown confounding factors.</li>
+<li>Block what you can, randomise what you cannot.</li>
+<li>Watch out for pseudoreplication!</li>
+<li>Randomise using a computer program if possible.</li>
+<li>Produce a design anatomy to see the spread of the degrees of freedom across sources of variation.</li>
 </ul>
-</div>
 
 <div class="quarto-auto-generated-content">
 <p><img src="_extensions/anu-links/anu-light/logo/ANU_ Crest_Gold.png" class="slide-logo"></p>
