@@ -735,6 +735,7 @@ tibble(trts3) %>%
 
 ```{webr-r}
 #| echo: true
+#| autorun: true
 library(edibble)
 trt_str <- set_trts(fertilizer = c("A", "B"),
                     water = c("irrigate", "rainfed"))
@@ -757,6 +758,7 @@ des1
 - Design anatomy shows the breakdown of degrees of freedom across different sources of variation (related to _skeleton ANOVA_)
 
 ```{webr-r}
+#| autorun: true
 design_anatomy(des3)
 ```
 
@@ -765,6 +767,7 @@ design_anatomy(des3)
 - The example below has no degrees of freedom for the residual source of variation
 
 ```{webr-r}
+#| autorun: true
 library(edibble)
 des_invalid <- design("Invalid design") |> 
   set_units(pen = 2, 
@@ -781,7 +784,7 @@ design_anatomy(des_invalid)
 
 ## Summary
 
-::: incremental
+
 
 - Remember the basic design principles: controls, replication, blocking, and randomisaton. 
 - Use blinding where applicable to reduce experimental bias.
@@ -791,5 +794,3 @@ design_anatomy(des_invalid)
 - Watch out for pseudoreplication!
 - Randomise using a computer program if possible.
 - Produce a design anatomy to see the spread of the degrees of freedom across sources of variation.
-
-:::
