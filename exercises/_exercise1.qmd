@@ -196,7 +196,7 @@ A biologist is studying the effect of different water temperatures on fish growt
 
 ::: {.webex-check .webex-box}
 
-a) Select the sentence that best describes the aim of the study. `r longmcq(c("A biologist is studying the effect of different water temperatures on fish growth.", answer = "They select 100 fish and randomly assign them to two tanks: one with water kept at 15°C and the other at 25°C.", "Over the course of a month, the researcher measures the weight gain of each fish in both tanks to assess how water temperature affects growth."))`
+a) Select the sentence that best describes the aim of the study. `r longmcq(c(answer = "A biologist is studying the effect of different water temperatures on fish growth.", "They select 100 fish and randomly assign them to two tanks: one with water kept at 15°C and the other at 25°C.", "Over the course of a month, the researcher measures the weight gain of each fish in both tanks to assess how water temperature affects growth."))`
 a) What type of study is this? `r longmcq(c(answer = "Experimental study", "Observational study"))`
 b) What are the treatments or exposures in this study? `r mcq(sample(c("Biologist", "Fish", answer = "Water temperature", "Tanks", "Weight gain")))`
 c) What are the experimental units or subjects in this study? `r mcq(sample(c("Biologist", "Fish",  "Water temperature", answer = "Tanks", "Weight gain")))`
